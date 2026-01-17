@@ -5,20 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Presentes - Areli & Jordan</title>
     
-    <!-- React & Babel -->
+    <!-- Bibliotecas Externas -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Fonts -->
+    <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Pinyon+Script&family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-    <!-- Firebase (Compat Version para estabilidade) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -29,10 +27,14 @@
         .font-script { font-family: 'Pinyon Script', cursive; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Animações */
         .fade-in { animation: fadeIn 0.5s ease-in; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .zoom-in { animation: zoomIn 0.3s ease-out; }
         @keyframes zoomIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        /* Loader */
         .spinner { width: 40px; height: 40px; border: 4px solid #e5e7eb; border-top: 4px solid #556b2f; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         #initial-loader { position: fixed; inset: 0; background: #f4f5f0; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
@@ -47,6 +49,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
+        // --- Configurações Iniciais ---
         const Icons = {
             Gift: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5H12z"/></svg>,
             CheckCircle: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>,
@@ -63,7 +66,8 @@
             Settings: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
             Copy: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>,
             ExternalLink: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>,
-            Lock: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Lock: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
+            Loader2: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
         };
 
         const firebaseConfig = {
@@ -75,15 +79,7 @@
             appId: "1:970093105832:web:5f43a1248a9c4fa7aae89d"
         };
 
-        // Firebase Init com verificação
-        try {
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
-            }
-        } catch (err) {
-            console.error("Firebase init error:", err);
-        }
-
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
         const appId = 'lista-presentes-v3-olive';
@@ -186,40 +182,73 @@
             const [editingGift, setEditingGift] = useState(null);
             const [formData, setFormData] = useState({ name: '', category: 'Cozinha', images: [], price: '', paymentStatus: 'não pago' });
             
-            // Estados para confirmações internas (evita confirm() nativo)
             const [confirmReleaseId, setConfirmReleaseId] = useState(null);
             const [confirmDeleteId, setConfirmDeleteId] = useState(null);
 
             const fileInputRef = useRef(null);
 
+            // Função para esconder o loader
+            const hideLoader = () => {
+                const loader = document.getElementById('initial-loader');
+                if(loader) {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 500);
+                }
+            };
+
+            // Regra 3: Autenticação primeiro
             useEffect(() => {
-                const unsub = auth.onAuthStateChanged((u) => {
-                    if (!u) auth.signInAnonymously();
-                    setUser(u);
-                });
-                return () => unsub();
+                const initAuth = async () => {
+                    try {
+                        const credential = await auth.signInAnonymously();
+                        setUser(credential.user);
+                    } catch (err) {
+                        console.error("Auth error:", err);
+                        hideLoader(); // Libera a tela se falhar o login
+                    }
+                };
+                initAuth();
+                
+                // Fail-safe para o loader (5 segundos max)
+                const timeout = setTimeout(hideLoader, 5000);
+                return () => clearTimeout(timeout);
             }, []);
 
             useEffect(() => {
                 if (!user) return;
+                
+                // Regra 1: Caminhos estritos
                 const path = db.collection('artifacts').doc(appId).collection('public').doc('data');
                 
-                const unsubGifts = path.collection('gift_list_items').onSnapshot(s => { 
-                    setGifts(s.docs.map(d => ({id: d.id, ...d.data()}))); 
-                    setLoading(false); 
-                    // Remove loader assim que os dados carregarem
-                    const loader = document.getElementById('initial-loader');
-                    if(loader) { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 500); }
-                });
+                const unsubGifts = path.collection('gift_list_items').onSnapshot(
+                    s => { 
+                        setGifts(s.docs.map(d => ({id: d.id, ...d.data()}))); 
+                        setLoading(false); 
+                        hideLoader(); 
+                    },
+                    err => { console.error("Gifts fetch error:", err); hideLoader(); }
+                );
 
-                const unsubRsvps = path.collection('rsvp_list').onSnapshot(s => setRsvps(s.docs.map(d => ({id: d.id, ...d.data()}))));
-                const unsubConfig = path.collection('site_config').doc('main').onSnapshot(s => s.exists && setSiteConfig(prev => ({...prev, ...s.data()})));
-                const unsubCats = path.collection('categories').doc('list').onSnapshot(s => s.exists && setDynamicCategories(s.data().items));
+                const unsubRsvps = path.collection('rsvp_list').onSnapshot(
+                    s => setRsvps(s.docs.map(d => ({id: d.id, ...d.data()}))),
+                    err => console.error("RSVP fetch error:", err)
+                );
+                
+                const unsubConfig = path.collection('site_config').doc('main').onSnapshot(
+                    s => s.exists && setSiteConfig(prev => ({...prev, ...s.data()})),
+                    err => console.error("Config fetch error:", err)
+                );
+                
+                const unsubCats = path.collection('categories').doc('list').onSnapshot(
+                    s => s.exists && setDynamicCategories(s.data().items),
+                    err => console.error("Categories fetch error:", err)
+                );
 
                 return () => { unsubGifts(); unsubRsvps(); unsubConfig(); unsubCats(); };
             }, [user]);
 
             const handleToggleGift = async (gift) => {
+                if (!user) return;
                 const ref = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(gift.id);
                 try {
                     await ref.update({ 
@@ -232,10 +261,12 @@
                     setExpandedGift(null);
                 } catch (e) {
                     console.error("Erro ao reservar:", e);
+                    alert("Erro ao salvar reserva. Verifique sua conexão.");
                 }
             };
 
             const handleReleaseReservation = async (id) => {
+                if (!user) return;
                 try {
                     await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(id).update({ 
                         takenBy: null, 
@@ -247,6 +278,7 @@
             };
 
             const handleDeleteItem = async (id) => {
+                if (!user) return;
                 try {
                     await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(id).delete();
                     setConfirmDeleteId(null);
@@ -255,10 +287,13 @@
 
             const handleSaveGift = async (e) => {
                 e.preventDefault();
+                if (!user) return;
                 const col = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items');
-                if (editingGift) await col.doc(editingGift.id).update(formData);
-                else await col.add({...formData, takenBy: null, takenById: null, paymentStatus: 'não pago'});
-                setShowAdminModal(false);
+                try {
+                    if (editingGift) await col.doc(editingGift.id).update(formData);
+                    else await col.add({...formData, takenBy: null, takenById: null, paymentStatus: 'não pago'});
+                    setShowAdminModal(false);
+                } catch (err) { console.error(err); }
             };
 
             const handleFileUpload = (e) => {
@@ -275,7 +310,7 @@
                     alert("O link de pagamento ainda não foi configurado.");
                     return;
                 }
-                let url = siteConfig.mercadoPagoLink.startsWith('http') ? siteConfig.mercadoPagoLink : 'https://' + siteConfig.mercadoPagoLink;
+                const url = siteConfig.mercadoPagoLink.startsWith('http') ? siteConfig.mercadoPagoLink : 'https://' + siteConfig.mercadoPagoLink;
                 window.open(url, '_blank');
             };
 
@@ -291,6 +326,7 @@
 
             const currentUserRsvp = useMemo(() => rsvps.find(r => r.id === user?.uid), [rsvps, user?.uid]);
 
+            // Tela de identificação do convidado
             if (!isNameSet && viewMode === 'guest') {
                 return (
                     <div className="min-h-screen flex items-center justify-center p-4 bg-[#f4f5f0]">
@@ -309,12 +345,14 @@
 
             return (
                 <div className="min-h-screen pb-20 fade-in">
+                    {/* Botão Admin flutuante */}
                     {user && viewMode === 'guest' && (
                         <button onClick={() => setViewMode('admin-login')} className="fixed bottom-6 right-6 z-[300] bg-white p-3 rounded-full shadow-lg text-gray-400 hover:text-[#556b2f] border transition-all">
                             <Icons.Settings size={20} />
                         </button>
                     )}
 
+                    {/* Header */}
                     <header className="bg-white shadow-sm sticky top-0 z-20 px-4 py-3">
                         <div className="max-w-6xl mx-auto flex justify-between items-center">
                             <h1 className="font-serif font-bold flex items-center gap-2 text-[#2f3b1c]"><Icons.Gift className="text-[#556b2f]"/> Lista de Presentes</h1>
@@ -322,6 +360,7 @@
                         </div>
                     </header>
 
+                    {/* Hero Section */}
                     <div className={`${THEME.primary} text-white py-20 px-4 text-center shadow-inner relative overflow-hidden`}>
                         <div className="max-w-4xl mx-auto relative z-10">
                             <h1 className="text-7xl md:text-9xl font-script mb-4 text-[#d2b48c] drop-shadow-md">Areli & Jordan</h1>
@@ -355,6 +394,7 @@
                         </div>
                     </div>
 
+                    {/* Filtros e Busca */}
                     <main className="max-w-6xl mx-auto px-4 mt-12">
                         <div className="flex flex-col md:flex-row gap-4 mb-8">
                             <div className="flex-1 bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 border border-gray-100">
@@ -370,7 +410,10 @@
                         </div>
 
                         {loading ? (
-                            <div className="flex flex-col items-center py-20 gap-4 text-gray-400"><Icons.Loader2 size={40} className="animate-spin" /><p className="font-bold text-sm tracking-widest uppercase">A carregar...</p></div>
+                            <div className="flex flex-col items-center py-20 gap-4 text-gray-400">
+                                <Icons.Loader2 size={40} />
+                                <p className="font-bold text-sm tracking-widest uppercase">A carregar mimos...</p>
+                            </div>
                         ) : (
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                                 {filteredGifts.length > 0 ? filteredGifts.map(g => (
@@ -382,7 +425,7 @@
                         )}
                     </main>
 
-                    {/* Modal de Pagamento */}
+                    {/* Modal Pagamento */}
                     {showPaymentModal && (
                         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                             <div className="bg-white rounded-[3rem] max-w-sm w-full p-10 shadow-2xl text-center relative zoom-in">
@@ -398,7 +441,19 @@
                                             <div className="flex-1 bg-gray-50 p-4 rounded-2xl text-xs font-mono border truncate">
                                                 {siteConfig.pixKey || "Chave não configurada"}
                                             </div>
-                                            {siteConfig.pixKey && <button onClick={() => { navigator.clipboard.writeText(siteConfig.pixKey); alert('Copiado!'); }} className="p-4 bg-gray-100 rounded-2xl text-[#556b2f] hover:bg-gray-200 transition-colors"><Icons.Copy size={18}/></button>}
+                                            {siteConfig.pixKey && (
+                                                <button onClick={() => { 
+                                                    const el = document.createElement('textarea');
+                                                    el.value = siteConfig.pixKey;
+                                                    document.body.appendChild(el);
+                                                    el.select();
+                                                    document.execCommand('copy');
+                                                    document.body.removeChild(el);
+                                                    alert('Chave Pix copiada!'); 
+                                                }} className="p-4 bg-gray-100 rounded-2xl text-[#556b2f] hover:bg-gray-200 transition-colors">
+                                                    <Icons.Copy size={18}/>
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="text-left">
@@ -415,7 +470,7 @@
                         </div>
                     )}
 
-                    {/* Detalhes do Item */}
+                    {/* Modal Detalhes Item */}
                     {expandedGift && (
                         <div className="fixed inset-0 z-[150] bg-white overflow-y-auto p-6 md:p-12 fade-in">
                             <button onClick={() => setExpandedGift(null)} className="fixed top-8 right-8 z-[160] bg-gray-100 p-3 rounded-full hover:bg-gray-200 transition-colors"><Icons.X /></button>
@@ -486,7 +541,7 @@
 
                                 {adminTab === 'reservados' && (
                                     <div className="bg-white p-8 rounded-[3rem] border fade-in">
-                                        <h2 className="text-2xl font-serif font-bold text-[#2f3b1c] mb-6">Reservas</h2>
+                                        <h2 className="text-2xl font-serif font-bold text-[#2f3b1c] mb-6">Controle de Reservas</h2>
                                         <div className="divide-y space-y-4">
                                             {gifts.filter(g => g.takenBy).map(g => (
                                                 <div key={g.id} className="py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 group">
@@ -504,14 +559,14 @@
                                                     </div>
                                                 </div>
                                             ))}
-                                            {gifts.filter(g => g.takenBy).length === 0 && <p className="py-20 text-center text-gray-300 italic">Nenhuma reserva.</p>}
+                                            {gifts.filter(g => g.takenBy).length === 0 && <p className="py-20 text-center text-gray-300 italic">Sem reservas ativas.</p>}
                                         </div>
                                     </div>
                                 )}
                                 
                                 {adminTab === 'prices' && (
                                     <div className="bg-gray-50 p-8 rounded-[3rem] border fade-in">
-                                        <h2 className="text-2xl font-serif font-bold mb-6">Ajuste de Preços</h2>
+                                        <h2 className="text-2xl font-serif font-bold mb-6">Ajuste Rápido</h2>
                                         <div className="space-y-4">
                                             {gifts.map(g => (
                                                 <div key={g.id} className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100 hover:border-[#556b2f] transition-all">
@@ -525,7 +580,7 @@
 
                                 {adminTab === 'config' && (
                                     <div className="space-y-8 bg-gray-50 p-8 md:p-12 rounded-[3rem] border fade-in">
-                                        <h2 className="text-2xl font-serif font-bold">Configurações do Site</h2>
+                                        <h2 className="text-2xl font-serif font-bold">Configuração Site</h2>
                                         <div className="grid md:grid-cols-2 gap-6">
                                             <div className="space-y-4">
                                                 <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Título</label><input className="w-full p-4 border rounded-2xl font-bold font-serif text-lg outline-none focus:ring-2 focus:ring-[#556b2f]" value={siteConfig.eventTitle} onChange={e => setSiteConfig({...siteConfig, eventTitle: e.target.value})} /></div>
@@ -534,25 +589,25 @@
                                             </div>
                                             <div className="space-y-4">
                                                 <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Chave PIX</label><input className="w-full p-4 border rounded-2xl font-bold font-mono outline-none focus:ring-2 focus:ring-[#556b2f]" value={siteConfig.pixKey} onChange={e => setSiteConfig({...siteConfig, pixKey: e.target.value})} /></div>
-                                                <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Link Pagamento</label><input className="w-full p-4 border rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#556b2f] text-xs" value={siteConfig.mercadoPagoLink} placeholder="https://..." onChange={e => setSiteConfig({...siteConfig, mercadoPagoLink: e.target.value})} /></div>
-                                                <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Mensagem</label><textarea className="w-full p-4 border rounded-2xl font-bold text-xs h-24 outline-none focus:ring-2 focus:ring-[#556b2f] resize-none" value={siteConfig.welcomeMessage} onChange={e => setSiteConfig({...siteConfig, welcomeMessage: e.target.value})} /></div>
+                                                <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Link de Pagamento Completo</label><input className="w-full p-4 border rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#556b2f] text-xs" value={siteConfig.mercadoPagoLink} placeholder="https://link.mercadopago.com.br/..." onChange={e => setSiteConfig({...siteConfig, mercadoPagoLink: e.target.value})} /></div>
+                                                <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Boas-vindas</label><textarea className="w-full p-4 border rounded-2xl font-bold text-xs h-24 outline-none focus:ring-2 focus:ring-[#556b2f] resize-none" value={siteConfig.welcomeMessage} onChange={e => setSiteConfig({...siteConfig, welcomeMessage: e.target.value})} /></div>
                                             </div>
                                         </div>
-                                        <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('site_config').doc('main').set(siteConfig); alert('Salvo!'); }} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-xs shadow-xl transition-all ${THEME.primary} hover:opacity-90`}>Salvar Alterações</button>
+                                        <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('site_config').doc('main').set(siteConfig); alert('Salvo!'); }} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-xs shadow-xl transition-all ${THEME.primary} hover:opacity-90`}>Aplicar Alterações</button>
                                     </div>
                                 )}
 
                                 {adminTab === 'rsvp' && (
                                     <div className="bg-white p-8 rounded-[3rem] border fade-in">
-                                        <h2 className="text-2xl font-serif font-bold mb-6 text-[#2f3b1c]">Lista de Presença</h2>
+                                        <h2 className="text-2xl font-serif font-bold mb-6 text-[#2f3b1c]">Convidados Confirmados</h2>
                                         <div className="divide-y">
                                             {rsvps.map(r => (
                                                 <div key={r.id} className="py-4 flex justify-between items-center group">
                                                     <div><p className="font-bold text-[#2f3b1c]">{r.name}</p><p className="text-[10px] text-gray-400 font-bold">{r.phone}</p></div>
-                                                    <span className={`text-[10px] font-black px-4 py-1 rounded-full border ${r.status === 'confirmed' ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-500 border-red-100'}`}>{r.status === 'confirmed' ? '✓ CONFIRMADO' : '✕ NÃO VAI'}</span>
+                                                    <span className={`text-[10px] font-black px-4 py-1 rounded-full border ${r.status === 'confirmed' ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-500 border-red-100'}`}>{r.status === 'confirmed' ? '✓ VAI' : '✕ NÃO VAI'}</span>
                                                 </div>
                                             ))}
-                                            {rsvps.length === 0 && <p className="py-20 text-center text-gray-300 italic">Sem confirmações.</p>}
+                                            {rsvps.length === 0 && <p className="py-20 text-center text-gray-300 italic">Ninguém confirmou ainda.</p>}
                                         </div>
                                     </div>
                                 )}
@@ -560,7 +615,7 @@
                         </div>
                     )}
 
-                    {/* Modal de Cadastro/Edição de Item */}
+                    {/* Modais de Cadastro */}
                     {showAdminModal && (
                         <div className="fixed inset-0 z-[600] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                             <div className="bg-white p-10 rounded-[3rem] w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl relative zoom-in">
@@ -588,18 +643,18 @@
                                             ))}
                                         </div>
                                     </div>
-                                    <button type="submit" className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-[10px] shadow-lg ${THEME.primary}`}>Salvar Presente</button>
+                                    <button type="submit" className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-[10px] shadow-lg ${THEME.primary}`}>Salvar no Firebase</button>
                                 </form>
                             </div>
                         </div>
                     )}
 
-                    {/* Login Admin */}
+                    {/* Modal Login */}
                     {viewMode === 'admin-login' && (
                         <div className="fixed inset-0 bg-[#f4f5f0] z-[400] flex items-center justify-center p-4">
                             <div className="max-w-sm w-full text-center bg-white p-12 rounded-[3rem] shadow-2xl border zoom-in">
-                                <h2 className="text-2xl font-serif font-bold mb-8">Acesso Restrito</h2>
-                                <input type="password" id="admin-p" placeholder="Senha" className="w-full p-5 border rounded-3xl text-center mb-6 font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" onKeyDown={(e) => e.key === 'Enter' && (e.target.value === ADMIN_PASSWORD ? setViewMode('admin-panel') : alert('Senha incorreta'))} />
+                                <h2 className="text-2xl font-serif font-bold mb-8">Painel Restrito</h2>
+                                <input type="password" id="admin-p" placeholder="Sua Senha" className="w-full p-5 border rounded-3xl text-center mb-6 font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" onKeyDown={(e) => e.key === 'Enter' && (e.target.value === ADMIN_PASSWORD ? setViewMode('admin-panel') : alert('Senha incorreta'))} />
                                 <button onClick={() => document.getElementById('admin-p').value === ADMIN_PASSWORD ? setViewMode('admin-panel') : alert('Senha incorreta')} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-[10px] shadow-xl ${THEME.primary}`}>Entrar</button>
                                 <button onClick={() => setViewMode('guest')} className="mt-6 text-gray-400 text-[10px] font-bold uppercase tracking-widest hover:text-[#556b2f]">Voltar</button>
                             </div>
@@ -611,8 +666,8 @@
                         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                             <div className="bg-white p-10 rounded-[3rem] w-full max-w-sm shadow-2xl text-center relative zoom-in">
                                 <button onClick={() => setShowRsvpModal(false)} className="absolute top-6 right-6 text-gray-300 hover:text-red-500 transition-colors"><Icons.X /></button>
-                                <h3 className="text-2xl font-bold mb-4">Confirmar Presença</h3>
-                                <p className="text-gray-400 text-sm mb-8">Você virá celebrar conosco?</p>
+                                <h3 className="text-2xl font-bold mb-4">Confirmação</h3>
+                                <p className="text-gray-400 text-sm mb-8">Pode confirmar sua presença abaixo:</p>
                                 <div className="space-y-3">
                                     <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'confirmed', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); }} className="w-full p-4 bg-green-50 text-green-700 rounded-2xl font-black border-2 border-green-100 uppercase tracking-widest text-xs">Sim, estarei lá! <Icons.CheckCircle className="inline ml-2" size={16}/></button>
                                     <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'declined', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); }} className="w-full p-4 bg-gray-50 text-gray-400 rounded-2xl font-black border uppercase tracking-widest text-xs">Infelizmente não</button>
