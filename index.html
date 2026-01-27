@@ -95,6 +95,38 @@
 
         const { useState, useEffect, useMemo, useRef } = React;
 
+        // Função de utilidade para comprimir imagem usando Canvas
+        const compressImage = (base64Str, maxWidth = 800, maxHeight = 800) => {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.src = base64Str;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width *= maxHeight / height;
+                            height = maxHeight;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    // Exporta como JPEG com qualidade 0.7 para reduzir drasticamente o tamanho final
+                    resolve(canvas.toDataURL('image/jpeg', 0.7));
+                };
+            });
+        };
+
         const GiftCard = ({ gift, user, onToggle, onExpand, theme }) => {
             const [imgIndex, setImgIndex] = useState(0);
             const images = useMemo(() => {
@@ -173,10 +205,9 @@
             const [searchTerm, setSearchTerm] = useState('');
             const [categoryFilter, setCategoryFilter] = useState('Todos');
             
-            // Estados de filtro para o Admin
             const [adminSearchTerm, setAdminSearchTerm] = useState('');
             const [adminCategoryFilter, setAdminCategoryFilter] = useState('Todos');
-            const [adminPriceRange, setAdminPriceRange] = useState('Todos'); // 'Todos', 'low', 'medium', 'high'
+            const [adminPriceRange, setAdminPriceRange] = useState('Todos');
 
             const [showPaymentModal, setShowPaymentModal] = useState(null);
             const [showRsvpModal, setShowRsvpModal] = useState(false);
@@ -292,9 +323,10 @@
                     updatedAt: new Date().toISOString()
                 };
 
+                // Verificação de segurança: Firestore limite de 1MB por documento total
                 const dataSize = JSON.stringify(giftData).length;
-                if (dataSize > 900000) {
-                    showMsg("As imagens são muito grandes. Remova algumas ou use fotos menores.", "error");
+                if (dataSize > 1000000) { 
+                    showMsg("O item ainda está muito pesado para o sistema. Remova algumas imagens ou use ficheiros menores.", "error");
                     setIsSaving(false);
                     return;
                 }
@@ -321,7 +353,7 @@
                     setShowAdminModal(false);
                 } catch (err) { 
                     console.error("Save error:", err);
-                    showMsg("Erro ao salvar. Verifique se as imagens não são muito pesadas.", "error");
+                    showMsg("Erro ao guardar. O item pode exceder o limite técnico.", "error");
                 } finally {
                     setIsSaving(false);
                 }
@@ -330,12 +362,18 @@
             const handleFileUpload = (e) => {
                 const files = Array.from(e.target.files);
                 files.forEach(file => {
-                    if (file.size > 500000) {
-                        showMsg("Imagem muito grande! Use fotos com menos de 500kb.", "error");
+                    // ATUALIZADO: Aumento do limite para 3MB (3.145.728 bytes)
+                    if (file.size > 3145728) {
+                        showMsg(`O ficheiro "${file.name}" é muito grande! Use fotos com menos de 3MB.`, "error");
                         return;
                     }
+                    
                     const reader = new FileReader();
-                    reader.onloadend = () => setFormData(prev => ({ ...prev, images: [...prev.images, reader.result] }));
+                    reader.onloadend = async () => {
+                        // Aplica compressão automática para garantir que caiba no Firestore (max 1mb doc total)
+                        const compressed = await compressImage(reader.result);
+                        setFormData(prev => ({ ...prev, images: [...prev.images, compressed] }));
+                    };
                     reader.readAsDataURL(file);
                 });
             };
@@ -354,13 +392,14 @@
                 (categoryFilter === 'Todos' || g.category === categoryFilter)
             ), [gifts, searchTerm, categoryFilter]);
 
-            // ATUALIZADO: Lógica de filtragem com faixas de preço específicas
             const adminFilteredGifts = useMemo(() => {
                 return gifts.filter(g => {
                     const matchesSearch = g.name.toLowerCase().includes(adminSearchTerm.toLowerCase());
                     const matchesCategory = adminCategoryFilter === 'Todos' || g.category === adminCategoryFilter;
                     
-                    const price = parseFloat(g.price?.replace(',', '.') || 0);
+                    const priceText = String(g.price || "0").replace('R$', '').trim().replace('.', '').replace(',', '.');
+                    const price = parseFloat(priceText || 0);
+                    
                     let matchesPrice = true;
                     if (adminPriceRange === 'low') matchesPrice = price >= 30 && price <= 40;
                     else if (adminPriceRange === 'medium') matchesPrice = price >= 45 && price <= 60;
@@ -383,8 +422,8 @@
                         <div className="bg-white max-w-md w-full rounded-[2.5rem] p-8 shadow-xl text-center zoom-in">
                             <h1 className="text-3xl font-serif font-bold mb-6 text-[#2f3b1c]">Bem-vindos!</h1>
                             <form onSubmit={(e) => { e.preventDefault(); localStorage.setItem('guest_name', guestName); localStorage.setItem('guest_phone', guestPhone); setIsNameSet(true); }} className="space-y-4">
-                                <input type="text" placeholder="Seu Nome" className="w-full p-4 rounded-2xl bg-gray-50 border outline-none font-bold focus:ring-2 focus:ring-[#556b2f] transition-all" value={guestName} onChange={e => setGuestName(e.target.value)} required />
-                                <input type="tel" placeholder="Seu Telefone" className="w-full p-4 rounded-2xl bg-gray-50 border outline-none font-bold focus:ring-2 focus:ring-[#556b2f] transition-all" value={guestPhone} onChange={e => setGuestPhone(e.target.value)} required />
+                                <input type="text" placeholder="O seu Nome" className="w-full p-4 rounded-2xl bg-gray-50 border outline-none font-bold focus:ring-2 focus:ring-[#556b2f] transition-all" value={guestName} onChange={e => setGuestName(e.target.value)} required />
+                                <input type="tel" placeholder="O seu Telemóvel" className="w-full p-4 rounded-2xl bg-gray-50 border outline-none font-bold focus:ring-2 focus:ring-[#556b2f] transition-all" value={guestPhone} onChange={e => setGuestPhone(e.target.value)} required />
                                 <button className={`w-full py-4 rounded-2xl text-white font-bold transition-all ${THEME.primary}`}>Entrar</button>
                             </form>
                             <button onClick={() => setViewMode('admin-login')} className="mt-6 text-gray-300 text-xs uppercase tracking-widest font-bold hover:text-[#556b2f]">Painel Administrativo</button>
@@ -451,7 +490,7 @@
                         <div className="flex flex-col md:flex-row gap-4 mb-8">
                             <div className="flex-1 bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 border border-gray-100">
                                 <Icons.Search className="text-gray-400" />
-                                <input type="text" placeholder="O que deseja presentear?" className="flex-1 outline-none text-gray-700 bg-transparent font-bold" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                                <input type="text" placeholder="O que deseja oferecer?" className="flex-1 outline-none text-gray-700 bg-transparent font-bold" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
                             </div>
                             <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                                 <button onClick={() => setCategoryFilter('Todos')} className={`px-6 py-3 rounded-full text-xs font-bold border transition-all whitespace-nowrap ${categoryFilter === 'Todos' ? `${THEME.primary} text-white border-transparent` : 'bg-white text-gray-400 border-gray-200'}`}>Todos</button>
@@ -474,12 +513,13 @@
                         )}
                     </main>
 
+                    {/* Modal Pagamento */}
                     {showPaymentModal && (
                         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                             <div className="bg-white rounded-[3rem] max-w-sm w-full p-10 shadow-2xl text-center relative zoom-in">
                                 <button onClick={() => setShowPaymentModal(null)} className="absolute top-6 right-6 text-gray-300 hover:text-red-500 transition-colors"><Icons.X /></button>
                                 <Icons.Gift size={40} className="mx-auto text-[#556b2f] mb-4" />
-                                <h3 className="text-2xl font-bold mb-1 text-[#2f3b1c]">Presentear</h3>
+                                <h3 className="text-2xl font-bold mb-1 text-[#2f3b1c]">Oferecer</h3>
                                 <p className="text-xs text-gray-400 mb-2 italic">"{showPaymentModal.name}"</p>
                                 
                                 {showPaymentModal.price && (
@@ -545,7 +585,7 @@
                                     <span className="text-[#556b2f] font-black uppercase tracking-[0.2em] text-xs mb-4">{expandedGift.category}</span>
                                     <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#2f3b1c] mb-4 leading-tight">{expandedGift.name}</h2>
                                     {expandedGift.price && <div className="mb-8 inline-block px-6 py-3 bg-[#556b2f]/10 text-[#556b2f] rounded-2xl font-black text-3xl border border-[#556b2f]/20 shadow-sm w-fit">R$ {expandedGift.price}</div>}
-                                    {!expandedGift.takenBy && <button onClick={() => setShowPaymentModal(expandedGift)} className={`w-full py-6 rounded-3xl text-white text-xl font-black shadow-xl transition-all ${THEME.primary} hover:opacity-95 flex items-center justify-center gap-3`}><Icons.Heart fill="white" /> PRESENTEAR AGORA</button>}
+                                    {!expandedGift.takenBy && <button onClick={() => setShowPaymentModal(expandedGift)} className={`w-full py-6 rounded-3xl text-white text-xl font-black shadow-xl transition-all ${THEME.primary} hover:opacity-95 flex items-center justify-center gap-3`}><Icons.Heart fill="white" /> OFERECER AGORA</button>}
                                 </div>
                             </div>
                         </div>
@@ -575,38 +615,19 @@
                                             </button>
 
                                             <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto flex-1 md:justify-end">
-                                                {/* Pesquisa no Admin */}
                                                 <div className="relative flex-1 max-w-sm">
                                                     <Icons.Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                                                    <input 
-                                                        type="text" 
-                                                        placeholder="Pesquisar item..." 
-                                                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-[#556b2f] font-bold"
-                                                        value={adminSearchTerm}
-                                                        onChange={(e) => setAdminSearchTerm(e.target.value)}
-                                                    />
+                                                    <input type="text" placeholder="Pesquisar item..." className="w-full pl-10 pr-4 py-3 bg-gray-50 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-[#556b2f] font-bold" value={adminSearchTerm} onChange={(e) => setAdminSearchTerm(e.target.value)} />
                                                 </div>
 
-                                                {/* Filtro de Categoria no Admin */}
-                                                <select 
-                                                    className="px-4 py-3 bg-gray-50 border rounded-xl text-xs font-bold outline-none cursor-pointer"
-                                                    value={adminCategoryFilter}
-                                                    onChange={(e) => setAdminCategoryFilter(e.target.value)}
-                                                >
+                                                <select className="px-4 py-3 bg-gray-50 border rounded-xl text-xs font-bold outline-none cursor-pointer" value={adminCategoryFilter} onChange={(e) => setAdminCategoryFilter(e.target.value)}>
                                                     <option value="Todos">Todas Categorias</option>
-                                                    {dynamicCategories.map(cat => (
-                                                        <option key={cat} value={cat}>{cat}</option>
-                                                    ))}
+                                                    {dynamicCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
                                                 </select>
 
-                                                {/* ATUALIZADO: Seletor de Faixa de Valor Personalizado */}
                                                 <div className="relative">
                                                     <Icons.DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
-                                                    <select 
-                                                        className="pl-9 pr-4 py-3 bg-gray-50 border rounded-xl text-xs font-bold outline-none cursor-pointer"
-                                                        value={adminPriceRange}
-                                                        onChange={(e) => setAdminPriceRange(e.target.value)}
-                                                    >
+                                                    <select className="pl-9 pr-4 py-3 bg-gray-50 border rounded-xl text-xs font-bold outline-none cursor-pointer" value={adminPriceRange} onChange={(e) => setAdminPriceRange(e.target.value)}>
                                                         <option value="Todos">Todos os Valores</option>
                                                         <option value="low">Entre 30 e 40 - Menor Preço</option>
                                                         <option value="medium">Entre 45 e 60 - Preço Médio</option>
@@ -633,18 +654,14 @@
                                                     </div>
                                                 </div>
                                             ))}
-                                            {adminFilteredGifts.length === 0 && (
-                                                <div className="py-20 text-center border-2 border-dashed rounded-3xl text-gray-300 italic">
-                                                    Nenhum item corresponde aos filtros selecionados.
-                                                </div>
-                                            )}
                                         </div>
                                     </div>
                                 )}
 
+                                {/* Outras Abas (Reservados, Preços, Config, RSVP) permanecem iguais */}
                                 {adminTab === 'reservados' && (
                                     <div className="bg-white p-8 rounded-[3rem] border fade-in">
-                                        <h2 className="text-2xl font-serif font-bold text-[#2f3b1c] mb-6">Controle de Reservas</h2>
+                                        <h2 className="text-2xl font-serif font-bold text-[#2f3b1c] mb-6">Controlo de Reservas</h2>
                                         <div className="divide-y space-y-4">
                                             {gifts.filter(g => g.takenBy).map(g => (
                                                 <div key={g.id} className="py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 group">
@@ -655,9 +672,9 @@
                                                     <div className="flex flex-wrap items-center gap-3">
                                                         <select value={g.paymentStatus || 'não pago'} onChange={(e) => db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(g.id).update({ paymentStatus: e.target.value })} className={`text-[10px] font-black px-4 py-2 rounded-full border outline-none cursor-pointer transition-all ${g.paymentStatus === 'pago' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-yellow-50 text-yellow-600 border-yellow-100'}`}><option value="não pago">NÃO PAGO</option><option value="pago">PAGO</option></select>
                                                         {confirmReleaseId === g.id ? (
-                                                            <div className="flex gap-1 bg-red-50 p-1 rounded-full border"><button onClick={() => handleReleaseReservation(g.id)} className="bg-red-600 text-white px-3 py-1.5 rounded-full text-[9px] font-black uppercase">Liberar</button><button onClick={() => setConfirmReleaseId(null)} className="bg-gray-200 text-gray-600 px-3 py-1.5 rounded-full text-[9px] font-black uppercase">Cancelar</button></div>
+                                                            <div className="flex gap-1 bg-red-50 p-1 rounded-full border"><button onClick={() => handleReleaseReservation(g.id)} className="bg-red-600 text-white px-3 py-1.5 rounded-full text-[9px] font-black uppercase">Libertar</button><button onClick={() => setConfirmReleaseId(null)} className="bg-gray-200 text-gray-600 px-3 py-1.5 rounded-full text-[9px] font-black uppercase">Cancelar</button></div>
                                                         ) : (
-                                                            <button onClick={() => setConfirmReleaseId(g.id)} className="px-4 py-2 bg-red-50 text-red-600 rounded-full text-[10px] font-black uppercase border hover:bg-red-100 transition-colors">Liberar Reserva</button>
+                                                            <button onClick={() => setConfirmReleaseId(g.id)} className="px-4 py-2 bg-red-50 text-red-600 rounded-full text-[10px] font-black uppercase border hover:bg-red-100 transition-colors">Libertar Reserva</button>
                                                         )}
                                                     </div>
                                                 </div>
@@ -666,7 +683,7 @@
                                         </div>
                                     </div>
                                 )}
-                                
+
                                 {adminTab === 'prices' && (
                                     <div className="bg-gray-50 p-8 rounded-[3rem] border fade-in">
                                         <h2 className="text-2xl font-serif font-bold mb-6 text-[#2f3b1c]">Ajuste Rápido</h2>
@@ -696,7 +713,7 @@
                                                 <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Boas-vindas</label><textarea className="w-full p-4 border rounded-2xl font-bold text-xs h-24 outline-none focus:ring-2 focus:ring-[#556b2f] resize-none" value={siteConfig.welcomeMessage} onChange={e => setSiteConfig({...siteConfig, welcomeMessage: e.target.value})} /></div>
                                             </div>
                                         </div>
-                                        <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('site_config').doc('main').set(siteConfig); showMsg('Site configurado!'); }} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-xs shadow-xl transition-all ${THEME.primary} hover:opacity-90`}>Salvar Tudo</button>
+                                        <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('site_config').doc('main').set(siteConfig); showMsg('Site configurado!'); }} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-xs shadow-xl transition-all ${THEME.primary} hover:opacity-90`}>Guardar Tudo</button>
                                     </div>
                                 )}
 
@@ -710,7 +727,6 @@
                                                     <span className={`text-[10px] font-black px-4 py-1 rounded-full border ${r.status === 'confirmed' ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-500 border-red-100'}`}>{r.status === 'confirmed' ? '✓ CONFIRMADO' : '✕ NÃO VAI'}</span>
                                                 </div>
                                             ))}
-                                            {rsvps.length === 0 && <p className="py-20 text-center text-gray-300 italic">Sem confirmações.</p>}
                                         </div>
                                     </div>
                                 )}
@@ -731,7 +747,7 @@
                                     </div>
                                     <div>
                                         <label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Fotos (Upload)</label>
-                                        <p className="text-[9px] text-gray-400 mb-2 italic">Dica: Use fotos quadradas e leves para melhor visualização.</p>
+                                        <p className="text-[9px] text-gray-400 mb-2 italic">Dica: Pode usar fotos de até **3MB**. O sistema irá otimizá-las automaticamente.</p>
                                         <div onClick={() => !isSaving && fileInputRef.current.click()} className="w-full py-8 border-4 border-dashed border-gray-100 rounded-[2rem] flex flex-col items-center justify-center text-gray-300 hover:text-[#556b2f] hover:border-[#556b2f] cursor-pointer group">
                                             <Icons.Upload size={32} className="mb-2 group-hover:scale-110 transition-transform" />
                                             <span className="text-xs font-black uppercase tracking-widest">Selecionar Imagens</span>
@@ -746,13 +762,9 @@
                                             ))}
                                         </div>
                                     </div>
-                                    <button 
-                                        type="submit" 
-                                        disabled={isSaving}
-                                        className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-[10px] shadow-lg flex items-center justify-center gap-2 ${isSaving ? 'bg-gray-400 cursor-not-allowed' : THEME.primary}`}
-                                    >
+                                    <button type="submit" disabled={isSaving} className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-[10px] shadow-lg flex items-center justify-center gap-2 ${isSaving ? 'bg-gray-400 cursor-not-allowed' : THEME.primary}`}>
                                         {isSaving ? <Icons.Loader2 size={16}/> : null}
-                                        {isSaving ? 'SALVANDO NO FIREBASE...' : 'SALVAR E PUBLICAR'}
+                                        {isSaving ? 'A GUARDAR NO FIREBASE...' : 'GUARDAR E PUBLICAR'}
                                     </button>
                                 </form>
                             </div>
@@ -763,8 +775,8 @@
                         <div className="fixed inset-0 bg-[#f4f5f0] z-[400] flex items-center justify-center p-4">
                             <div className="max-w-sm w-full text-center bg-white p-12 rounded-[3rem] shadow-2xl border zoom-in">
                                 <h2 className="text-2xl font-serif font-bold mb-8">Acesso Restrito</h2>
-                                <input type="password" id="admin-p" placeholder="Senha" className="w-full p-5 border rounded-3xl text-center mb-6 font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" onKeyDown={(e) => e.key === 'Enter' && (e.target.value === ADMIN_PASSWORD ? setViewMode('admin-panel') : showMsg('Senha incorreta', 'error'))} />
-                                <button onClick={() => document.getElementById('admin-p').value === ADMIN_PASSWORD ? setViewMode('admin-panel') : showMsg('Senha incorreta', 'error')} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-[10px] shadow-xl ${THEME.primary}`}>Entrar</button>
+                                <input type="password" id="admin-p" placeholder="Palavra-passe" className="w-full p-5 border rounded-3xl text-center mb-6 font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" onKeyDown={(e) => e.key === 'Enter' && (e.target.value === ADMIN_PASSWORD ? setViewMode('admin-panel') : showMsg('Palavra-passe incorreta', 'error'))} />
+                                <button onClick={() => document.getElementById('admin-p').value === ADMIN_PASSWORD ? setViewMode('admin-panel') : showMsg('Palavra-passe incorreta', 'error')} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-[10px] shadow-xl ${THEME.primary}`}>Entrar</button>
                                 <button onClick={() => setViewMode('guest')} className="mt-6 text-gray-400 text-[10px] font-bold uppercase tracking-widest hover:text-[#556b2f]">Voltar</button>
                             </div>
                         </div>
@@ -772,10 +784,10 @@
 
                     {showRsvpModal && (
                         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                            <div className="bg-white p-10 rounded-[3rem] w-full max-w-sm shadow-2xl text-center relative zoom-in">
+                            <div className="bg-white p-10 rounded-[3rem] w-full max-sm shadow-2xl text-center relative zoom-in">
                                 <button onClick={() => setShowRsvpModal(false)} className="absolute top-6 right-6 text-gray-300 hover:text-red-500 transition-colors"><Icons.X /></button>
                                 <h3 className="text-2xl font-bold mb-4">Confirmar Presença</h3>
-                                <p className="text-gray-400 text-sm mb-8">Você virá celebrar conosco?</p>
+                                <p className="text-gray-400 text-sm mb-8">Virá celebrar connosco?</p>
                                 <div className="space-y-3">
                                     <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'confirmed', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); showMsg("Presença confirmada!"); }} className="w-full p-4 bg-green-50 text-green-700 rounded-2xl font-black border-2 border-green-100 uppercase tracking-widest text-xs">Sim, estarei lá! <Icons.CheckCircle className="inline ml-2" size={16}/></button>
                                     <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'declined', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); showMsg("Presença cancelada."); }} className="w-full p-4 bg-gray-50 text-gray-400 rounded-2xl font-black border uppercase tracking-widest text-xs">Infelizmente não</button>
