@@ -65,7 +65,8 @@
             ExternalLink: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>,
             Lock: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
             Loader2: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>,
-            QrCode: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>
+            QrCode: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>,
+            DollarSign: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         };
 
         const firebaseConfig = {
@@ -172,6 +173,11 @@
             const [searchTerm, setSearchTerm] = useState('');
             const [categoryFilter, setCategoryFilter] = useState('Todos');
             
+            // Estados de filtro para o Admin
+            const [adminSearchTerm, setAdminSearchTerm] = useState('');
+            const [adminCategoryFilter, setAdminCategoryFilter] = useState('Todos');
+            const [adminPriceRange, setAdminPriceRange] = useState('Todos'); // 'Todos', 'low', 'medium', 'high'
+
             const [showPaymentModal, setShowPaymentModal] = useState(null);
             const [showRsvpModal, setShowRsvpModal] = useState(false);
             const [expandedGift, setExpandedGift] = useState(null);
@@ -286,7 +292,6 @@
                     updatedAt: new Date().toISOString()
                 };
 
-                // Validação de tamanho para evitar erro de 1MB do Firestore
                 const dataSize = JSON.stringify(giftData).length;
                 if (dataSize > 900000) {
                     showMsg("As imagens são muito grandes. Remova algumas ou use fotos menores.", "error");
@@ -349,6 +354,22 @@
                 (categoryFilter === 'Todos' || g.category === categoryFilter)
             ), [gifts, searchTerm, categoryFilter]);
 
+            // ATUALIZADO: Lógica de filtragem com faixas de preço específicas
+            const adminFilteredGifts = useMemo(() => {
+                return gifts.filter(g => {
+                    const matchesSearch = g.name.toLowerCase().includes(adminSearchTerm.toLowerCase());
+                    const matchesCategory = adminCategoryFilter === 'Todos' || g.category === adminCategoryFilter;
+                    
+                    const price = parseFloat(g.price?.replace(',', '.') || 0);
+                    let matchesPrice = true;
+                    if (adminPriceRange === 'low') matchesPrice = price >= 30 && price <= 40;
+                    else if (adminPriceRange === 'medium') matchesPrice = price >= 45 && price <= 60;
+                    else if (adminPriceRange === 'high') matchesPrice = price >= 65 && price <= 100;
+
+                    return matchesSearch && matchesCategory && matchesPrice;
+                });
+            }, [gifts, adminSearchTerm, adminCategoryFilter, adminPriceRange]);
+
             const stats = useMemo(() => ({
                 available: gifts.filter(g => !g.takenBy).length,
                 reserved: gifts.filter(g => g.takenBy).length
@@ -374,7 +395,6 @@
 
             return (
                 <div className="min-h-screen pb-20 fade-in">
-                    {/* Notificações do Sistema */}
                     {notification && (
                         <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[1000] px-6 py-3 rounded-full shadow-2xl font-bold text-white text-sm animate-bounce ${notification.type === 'error' ? 'bg-red-500' : 'bg-green-600'}`}>
                             {notification.text}
@@ -454,7 +474,6 @@
                         )}
                     </main>
 
-                    {/* Modal Pagamento */}
                     {showPaymentModal && (
                         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                             <div className="bg-white rounded-[3rem] max-w-sm w-full p-10 shadow-2xl text-center relative zoom-in">
@@ -550,11 +569,55 @@
 
                                 {adminTab === 'gifts' && (
                                     <div className="fade-in">
-                                        <button onClick={() => { setEditingGift(null); setFormData({name: '', category: 'Cozinha', images: [], price: '', paymentStatus: 'não pago'}); setShowAdminModal(true); }} className={`mb-8 px-8 py-4 rounded-2xl text-white font-black text-xs uppercase tracking-widest flex items-center gap-2 shadow-lg transition-all ${THEME.primary} hover:opacity-90`}>
-                                            <Icons.Plus size={18}/> Novo Presente
-                                        </button>
+                                        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+                                            <button onClick={() => { setEditingGift(null); setFormData({name: '', category: 'Cozinha', images: [], price: '', paymentStatus: 'não pago'}); setShowAdminModal(true); }} className={`w-full md:w-auto px-8 py-4 rounded-2xl text-white font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all ${THEME.primary} hover:opacity-90`}>
+                                                <Icons.Plus size={18}/> Novo Presente
+                                            </button>
+
+                                            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto flex-1 md:justify-end">
+                                                {/* Pesquisa no Admin */}
+                                                <div className="relative flex-1 max-w-sm">
+                                                    <Icons.Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                                                    <input 
+                                                        type="text" 
+                                                        placeholder="Pesquisar item..." 
+                                                        className="w-full pl-10 pr-4 py-3 bg-gray-50 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-[#556b2f] font-bold"
+                                                        value={adminSearchTerm}
+                                                        onChange={(e) => setAdminSearchTerm(e.target.value)}
+                                                    />
+                                                </div>
+
+                                                {/* Filtro de Categoria no Admin */}
+                                                <select 
+                                                    className="px-4 py-3 bg-gray-50 border rounded-xl text-xs font-bold outline-none cursor-pointer"
+                                                    value={adminCategoryFilter}
+                                                    onChange={(e) => setAdminCategoryFilter(e.target.value)}
+                                                >
+                                                    <option value="Todos">Todas Categorias</option>
+                                                    {dynamicCategories.map(cat => (
+                                                        <option key={cat} value={cat}>{cat}</option>
+                                                    ))}
+                                                </select>
+
+                                                {/* ATUALIZADO: Seletor de Faixa de Valor Personalizado */}
+                                                <div className="relative">
+                                                    <Icons.DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
+                                                    <select 
+                                                        className="pl-9 pr-4 py-3 bg-gray-50 border rounded-xl text-xs font-bold outline-none cursor-pointer"
+                                                        value={adminPriceRange}
+                                                        onChange={(e) => setAdminPriceRange(e.target.value)}
+                                                    >
+                                                        <option value="Todos">Todos os Valores</option>
+                                                        <option value="low">Entre 30 e 40 - Menor Preço</option>
+                                                        <option value="medium">Entre 45 e 60 - Preço Médio</option>
+                                                        <option value="high">Entre 65 e 100 - Maior Preço</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div className="grid gap-4">
-                                            {gifts.map(g => (
+                                            {adminFilteredGifts.map(g => (
                                                 <div key={g.id} className="p-4 bg-white rounded-2xl flex justify-between items-center border group shadow-sm hover:border-[#556b2f] transition-all">
                                                     <div className="flex items-center gap-4 overflow-hidden">
                                                         <img src={(g.images?.[0] || g.image) || 'https://placehold.co/100'} className="w-16 h-16 rounded-xl object-cover border flex-shrink-0" />
@@ -570,6 +633,11 @@
                                                     </div>
                                                 </div>
                                             ))}
+                                            {adminFilteredGifts.length === 0 && (
+                                                <div className="py-20 text-center border-2 border-dashed rounded-3xl text-gray-300 italic">
+                                                    Nenhum item corresponde aos filtros selecionados.
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 )}
