@@ -167,6 +167,8 @@
             const [guestPhone, setGuestPhone] = useState(() => localStorage.getItem('guest_phone') || '');
             const [isNameSet, setIsNameSet] = useState(() => !!localStorage.getItem('guest_name'));
             const [loading, setLoading] = useState(true);
+            const [isSaving, setIsSaving] = useState(false);
+            const [notification, setNotification] = useState(null);
             const [searchTerm, setSearchTerm] = useState('');
             const [categoryFilter, setCategoryFilter] = useState('Todos');
             
@@ -182,6 +184,11 @@
             const [confirmDeleteId, setConfirmDeleteId] = useState(null);
 
             const fileInputRef = useRef(null);
+
+            const showMsg = (text, type = 'success') => {
+                setNotification({ text, type });
+                setTimeout(() => setNotification(null), 3000);
+            };
 
             const hideLoader = () => {
                 const loader = document.getElementById('initial-loader');
@@ -238,8 +245,10 @@
                     });
                     setShowPaymentModal(null);
                     setExpandedGift(null);
+                    showMsg("Presente reservado com sucesso!");
                 } catch (e) {
                     console.error("Erro ao reservar:", e);
+                    showMsg("Erro ao reservar presente.", "error");
                 }
             };
 
@@ -252,6 +261,7 @@
                         paymentStatus: 'não pago' 
                     });
                     setConfirmReleaseId(null);
+                    showMsg("Reserva liberada.");
                 } catch (error) { console.error(error); }
             };
 
@@ -260,12 +270,15 @@
                 try {
                     await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(id).delete();
                     setConfirmDeleteId(null);
+                    showMsg("Item excluído.");
                 } catch (error) { console.error(error); }
             };
 
             const handleSaveGift = async (e) => {
                 e.preventDefault();
-                if (!user) return;
+                if (!user || isSaving) return;
+                
+                setIsSaving(true);
                 const col = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items');
                 
                 const giftData = {
@@ -273,9 +286,18 @@
                     updatedAt: new Date().toISOString()
                 };
 
+                // Validação de tamanho para evitar erro de 1MB do Firestore
+                const dataSize = JSON.stringify(giftData).length;
+                if (dataSize > 900000) {
+                    showMsg("As imagens são muito grandes. Remova algumas ou use fotos menores.", "error");
+                    setIsSaving(false);
+                    return;
+                }
+
                 try {
                     if (editingGift) {
                         await col.doc(editingGift.id).update(giftData);
+                        showMsg("Item atualizado!");
                     } else {
                         await col.add({
                             ...giftData,
@@ -284,6 +306,7 @@
                             paymentStatus: 'não pago',
                             createdAt: new Date().toISOString()
                         });
+                        showMsg("Novo item adicionado!");
                     }
                     
                     setSearchTerm(''); 
@@ -292,14 +315,20 @@
                     setEditingGift(null);
                     setShowAdminModal(false);
                 } catch (err) { 
-                    console.error(err); 
-                    alert("Erro ao salvar. Verifique sua conexão.");
+                    console.error("Save error:", err);
+                    showMsg("Erro ao salvar. Verifique se as imagens não são muito pesadas.", "error");
+                } finally {
+                    setIsSaving(false);
                 }
             };
 
             const handleFileUpload = (e) => {
                 const files = Array.from(e.target.files);
                 files.forEach(file => {
+                    if (file.size > 500000) {
+                        showMsg("Imagem muito grande! Use fotos com menos de 500kb.", "error");
+                        return;
+                    }
                     const reader = new FileReader();
                     reader.onloadend = () => setFormData(prev => ({ ...prev, images: [...prev.images, reader.result] }));
                     reader.readAsDataURL(file);
@@ -308,7 +337,7 @@
 
             const openPaymentLink = () => {
                 if (!siteConfig.mercadoPagoLink || siteConfig.mercadoPagoLink === "#") {
-                    alert("O link de pagamento ainda não foi configurado.");
+                    showMsg("Link de pagamento não configurado.", "error");
                     return;
                 }
                 const url = siteConfig.mercadoPagoLink.startsWith('http') ? siteConfig.mercadoPagoLink : 'https://' + siteConfig.mercadoPagoLink;
@@ -345,6 +374,13 @@
 
             return (
                 <div className="min-h-screen pb-20 fade-in">
+                    {/* Notificações do Sistema */}
+                    {notification && (
+                        <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[1000] px-6 py-3 rounded-full shadow-2xl font-bold text-white text-sm animate-bounce ${notification.type === 'error' ? 'bg-red-500' : 'bg-green-600'}`}>
+                            {notification.text}
+                        </div>
+                    )}
+
                     {user && viewMode === 'guest' && (
                         <button onClick={() => setViewMode('admin-login')} className="fixed bottom-6 right-6 z-[300] bg-white p-3 rounded-full shadow-lg text-gray-400 hover:text-[#556b2f] border transition-all">
                             <Icons.Settings size={20} />
@@ -418,7 +454,7 @@
                         )}
                     </main>
 
-                    {/* Modal Pagamento - Atualizado com Preço e Ícone QR Code */}
+                    {/* Modal Pagamento */}
                     {showPaymentModal && (
                         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                             <div className="bg-white rounded-[3rem] max-w-sm w-full p-10 shadow-2xl text-center relative zoom-in">
@@ -451,7 +487,7 @@
                                                     el.select();
                                                     document.execCommand('copy');
                                                     document.body.removeChild(el);
-                                                    alert('Chave Pix copiada!'); 
+                                                    showMsg('Chave Pix copiada!'); 
                                                 }} className="p-4 bg-gray-100 rounded-2xl text-[#556b2f] hover:bg-gray-200 transition-colors">
                                                     <Icons.Copy size={18}/>
                                                 </button>
@@ -592,7 +628,7 @@
                                                 <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Boas-vindas</label><textarea className="w-full p-4 border rounded-2xl font-bold text-xs h-24 outline-none focus:ring-2 focus:ring-[#556b2f] resize-none" value={siteConfig.welcomeMessage} onChange={e => setSiteConfig({...siteConfig, welcomeMessage: e.target.value})} /></div>
                                             </div>
                                         </div>
-                                        <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('site_config').doc('main').set(siteConfig); alert('Salvo!'); }} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-xs shadow-xl transition-all ${THEME.primary} hover:opacity-90`}>Salvar Tudo</button>
+                                        <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('site_config').doc('main').set(siteConfig); showMsg('Site configurado!'); }} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-xs shadow-xl transition-all ${THEME.primary} hover:opacity-90`}>Salvar Tudo</button>
                                     </div>
                                 )}
 
@@ -627,7 +663,8 @@
                                     </div>
                                     <div>
                                         <label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Fotos (Upload)</label>
-                                        <div onClick={() => fileInputRef.current.click()} className="w-full py-8 border-4 border-dashed border-gray-100 rounded-[2rem] flex flex-col items-center justify-center text-gray-300 hover:text-[#556b2f] hover:border-[#556b2f] cursor-pointer group">
+                                        <p className="text-[9px] text-gray-400 mb-2 italic">Dica: Use fotos quadradas e leves para melhor visualização.</p>
+                                        <div onClick={() => !isSaving && fileInputRef.current.click()} className="w-full py-8 border-4 border-dashed border-gray-100 rounded-[2rem] flex flex-col items-center justify-center text-gray-300 hover:text-[#556b2f] hover:border-[#556b2f] cursor-pointer group">
                                             <Icons.Upload size={32} className="mb-2 group-hover:scale-110 transition-transform" />
                                             <span className="text-xs font-black uppercase tracking-widest">Selecionar Imagens</span>
                                             <input type="file" ref={fileInputRef} multiple accept="image/*" className="hidden" onChange={handleFileUpload} />
@@ -641,7 +678,14 @@
                                             ))}
                                         </div>
                                     </div>
-                                    <button type="submit" className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-[10px] shadow-lg ${THEME.primary}`}>Salvar e Publicar</button>
+                                    <button 
+                                        type="submit" 
+                                        disabled={isSaving}
+                                        className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-[10px] shadow-lg flex items-center justify-center gap-2 ${isSaving ? 'bg-gray-400 cursor-not-allowed' : THEME.primary}`}
+                                    >
+                                        {isSaving ? <Icons.Loader2 size={16}/> : null}
+                                        {isSaving ? 'SALVANDO NO FIREBASE...' : 'SALVAR E PUBLICAR'}
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -651,8 +695,8 @@
                         <div className="fixed inset-0 bg-[#f4f5f0] z-[400] flex items-center justify-center p-4">
                             <div className="max-w-sm w-full text-center bg-white p-12 rounded-[3rem] shadow-2xl border zoom-in">
                                 <h2 className="text-2xl font-serif font-bold mb-8">Acesso Restrito</h2>
-                                <input type="password" id="admin-p" placeholder="Senha" className="w-full p-5 border rounded-3xl text-center mb-6 font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" onKeyDown={(e) => e.key === 'Enter' && (e.target.value === ADMIN_PASSWORD ? setViewMode('admin-panel') : alert('Senha incorreta'))} />
-                                <button onClick={() => document.getElementById('admin-p').value === ADMIN_PASSWORD ? setViewMode('admin-panel') : alert('Senha incorreta')} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-[10px] shadow-xl ${THEME.primary}`}>Entrar</button>
+                                <input type="password" id="admin-p" placeholder="Senha" className="w-full p-5 border rounded-3xl text-center mb-6 font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" onKeyDown={(e) => e.key === 'Enter' && (e.target.value === ADMIN_PASSWORD ? setViewMode('admin-panel') : showMsg('Senha incorreta', 'error'))} />
+                                <button onClick={() => document.getElementById('admin-p').value === ADMIN_PASSWORD ? setViewMode('admin-panel') : showMsg('Senha incorreta', 'error')} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-[10px] shadow-xl ${THEME.primary}`}>Entrar</button>
                                 <button onClick={() => setViewMode('guest')} className="mt-6 text-gray-400 text-[10px] font-bold uppercase tracking-widest hover:text-[#556b2f]">Voltar</button>
                             </div>
                         </div>
@@ -665,8 +709,8 @@
                                 <h3 className="text-2xl font-bold mb-4">Confirmar Presença</h3>
                                 <p className="text-gray-400 text-sm mb-8">Você virá celebrar conosco?</p>
                                 <div className="space-y-3">
-                                    <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'confirmed', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); }} className="w-full p-4 bg-green-50 text-green-700 rounded-2xl font-black border-2 border-green-100 uppercase tracking-widest text-xs">Sim, estarei lá! <Icons.CheckCircle className="inline ml-2" size={16}/></button>
-                                    <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'declined', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); }} className="w-full p-4 bg-gray-50 text-gray-400 rounded-2xl font-black border uppercase tracking-widest text-xs">Infelizmente não</button>
+                                    <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'confirmed', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); showMsg("Presença confirmada!"); }} className="w-full p-4 bg-green-50 text-green-700 rounded-2xl font-black border-2 border-green-100 uppercase tracking-widest text-xs">Sim, estarei lá! <Icons.CheckCircle className="inline ml-2" size={16}/></button>
+                                    <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'declined', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); showMsg("Presença cancelada."); }} className="w-full p-4 bg-gray-50 text-gray-400 rounded-2xl font-black border uppercase tracking-widest text-xs">Infelizmente não</button>
                                 </div>
                             </div>
                         </div>
