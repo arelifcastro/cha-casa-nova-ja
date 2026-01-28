@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Pinyon+Script&family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet">
 
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK (Compat Mode) -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -60,13 +60,16 @@
             Edit2: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>,
             X: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
             Upload: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>,
-            Settings: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
             Copy: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>,
-            ExternalLink: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>,
+            ExternalLink: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1-2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>,
             Lock: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
             Loader2: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>,
             QrCode: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>,
-            DollarSign: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            DollarSign: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>,
+            BarChart2: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
+            TrendingUp: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>,
+            ChevronLeft: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>,
+            ChevronRight: (props) => <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         };
 
         const firebaseConfig = {
@@ -75,10 +78,11 @@
             projectId: "cha-casa-nova-133e0",
             storageBucket: "cha-casa-nova-133e0.firebasestorage.app",
             messagingSenderId: "970093105832",
-            appId: "1:970093105832:web:5f43a1248a9c4fa7aae89d"
+            appId: "1:970093105832:web:5f43a1248a9c4fa7aae89d",
+            measurementId: "G-8SX9HGMHPR"
         };
-
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        
+        const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
         const appId = 'lista-presentes-v3-olive';
@@ -95,51 +99,35 @@
 
         const { useState, useEffect, useMemo, useRef } = React;
 
-        // Função de utilidade para comprimir imagem usando Canvas
         const compressImage = (base64Str, maxWidth = 800, maxHeight = 800) => {
-            return new Promise((resolve) => {
+            return new Promise((resolve, reject) => {
                 const img = new Image();
                 img.src = base64Str;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
                     let width = img.width;
                     let height = img.height;
-
                     if (width > height) {
-                        if (width > maxWidth) {
-                            height *= maxWidth / width;
-                            width = maxWidth;
-                        }
+                        if (width > maxWidth) { height *= maxWidth / width; width = maxWidth; }
                     } else {
-                        if (height > maxHeight) {
-                            width *= maxHeight / height;
-                            height = maxHeight;
-                        }
+                        if (height > maxHeight) { width *= maxHeight / height; height = maxHeight; }
                     }
-
                     canvas.width = width;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    // Exporta como JPEG com qualidade 0.7 para reduzir drasticamente o tamanho final
                     resolve(canvas.toDataURL('image/jpeg', 0.7));
                 };
+                img.onerror = () => reject(new Error("Falha ao processar imagem"));
             });
         };
 
         const GiftCard = ({ gift, user, onToggle, onExpand, theme }) => {
-            const [imgIndex, setImgIndex] = useState(0);
             const images = useMemo(() => {
                 if (gift.images && gift.images.length > 0) return gift.images;
                 if (gift.image) return [gift.image];
                 return ['https://placehold.co/600x400?text=Sem+Imagem'];
             }, [gift.images, gift.image]);
-
-            useEffect(() => {
-                if (images.length <= 1) return;
-                const intervalId = setInterval(() => setImgIndex((p) => (p + 1) % images.length), 3500);
-                return () => clearInterval(intervalId);
-            }, [images.length]);
 
             const isTaken = !!gift.takenBy;
             const takenByMe = gift.takenById === user?.uid;
@@ -147,21 +135,16 @@
             return (
                 <div className={`group relative bg-white rounded-xl shadow-sm border transition-all duration-300 overflow-hidden flex flex-col h-full ${isTaken ? (takenByMe ? 'border-green-500 ring-1 ring-green-100' : 'opacity-70 grayscale-[0.3]') : 'border-[#dce0d5] hover:shadow-xl hover:-translate-y-1 hover:border-[#556b2f]'}`}>
                     <div className="relative h-48 w-full overflow-hidden bg-gray-100 cursor-pointer" onClick={() => onExpand(gift)}>
-                        <img src={images[imgIndex]} className="w-full h-full object-cover transition-opacity duration-1000" alt={gift.name} />
+                        <img src={images[0]} className="w-full h-full object-cover transition-opacity duration-1000" alt={gift.name} />
                         {images.length > 1 && (
-                            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-                                {images.map((_, i) => (
-                                    <div key={i} className={`h-1 rounded-full transition-all ${i === imgIndex ? 'w-4 bg-white' : 'w-1 bg-white/40'}`} />
-                                ))}
-                            </div>
+                            <div className="absolute bottom-2 right-2 bg-black/50 text-white text-[10px] px-2 py-1 rounded-full font-bold">+{images.length - 1} fotos</div>
                         )}
                     </div>
                     <div className="p-4 flex-1 flex flex-col cursor-pointer" onClick={() => onExpand(gift)}>
-                        <span className="inline-block px-2 py-1 bg-[#f4f5f0] rounded text-[10px] text-[#556b2f] font-bold uppercase mb-2 w-fit">{gift.category}</span>
                         <h3 className="font-serif font-bold text-lg text-[#2f3b1c] leading-tight line-clamp-2">{gift.name}</h3>
                         
                         {gift.price && (
-                            <div className="mt-3 inline-block px-4 py-2 bg-[#556b2f]/10 text-[#556b2f] rounded-lg font-black text-lg border border-[#556b2f]/20 shadow-sm w-fit transition-transform hover:scale-105">
+                            <div className="mt-3 inline-block px-4 py-2 bg-[#556b2f]/10 text-[#556b2f] rounded-lg font-black text-lg border border-[#556b2f]/20 shadow-sm w-fit">
                                 R$ {gift.price}
                             </div>
                         )}
@@ -183,10 +166,9 @@
         function App() {
             const [user, setUser] = useState(null);
             const [viewMode, setViewMode] = useState('guest');
-            const [adminTab, setAdminTab] = useState('gifts');
+            const [adminTab, setAdminTab] = useState('dashboard');
             const [gifts, setGifts] = useState([]);
             const [rsvps, setRsvps] = useState([]);
-            const [dynamicCategories, setDynamicCategories] = useState(['Cozinha', 'Sala', 'Quarto', 'Banheiro', 'Eletro', 'Decoração', 'Cotistas']);
             const [siteConfig, setSiteConfig] = useState({
                 eventTitle: "Chá de Casa Nova",
                 eventDate: "21 de Fevereiro, 2026",
@@ -195,59 +177,103 @@
                 pixKey: "",
                 mercadoPagoLink: ""
             });
-
             const [guestName, setGuestName] = useState(() => localStorage.getItem('guest_name') || '');
             const [guestPhone, setGuestPhone] = useState(() => localStorage.getItem('guest_phone') || '');
             const [isNameSet, setIsNameSet] = useState(() => !!localStorage.getItem('guest_name'));
             const [loading, setLoading] = useState(true);
             const [isSaving, setIsSaving] = useState(false);
+            const [isImageProcessing, setIsImageProcessing] = useState(false);
+            const [isReserving, setIsReserving] = useState(false);
             const [notification, setNotification] = useState(null);
             const [searchTerm, setSearchTerm] = useState('');
-            const [categoryFilter, setCategoryFilter] = useState('Todos');
-            
+            const [statusFilter, setStatusFilter] = useState('Todos');
             const [adminSearchTerm, setAdminSearchTerm] = useState('');
-            const [adminCategoryFilter, setAdminCategoryFilter] = useState('Todos');
-            const [adminPriceRange, setAdminPriceRange] = useState('Todos');
-
+            const [adminPriceRange, setAdminPriceRange] = useState('Todos'); 
+            const [adminPasswordInput, setAdminPasswordInput] = useState('');
             const [showPaymentModal, setShowPaymentModal] = useState(null);
             const [showRsvpModal, setShowRsvpModal] = useState(false);
             const [expandedGift, setExpandedGift] = useState(null);
             const [expandedImgIndex, setExpandedImgIndex] = useState(0);
             const [showAdminModal, setShowAdminModal] = useState(false);
             const [editingGift, setEditingGift] = useState(null);
-            const [formData, setFormData] = useState({ name: '', category: 'Cozinha', images: [], price: '', paymentStatus: 'não pago' });
-            
+            const [formData, setFormData] = useState({ name: '', price: '', images: [], paymentStatus: 'não pago' });
             const [confirmReleaseId, setConfirmReleaseId] = useState(null);
             const [confirmDeleteId, setConfirmDeleteId] = useState(null);
-
             const fileInputRef = useRef(null);
+
+            // MUDANÇA: Efeito para Auto-play das fotos
+            useEffect(() => {
+                let interval;
+                if (expandedGift && expandedGift.images?.length > 1) {
+                    interval = setInterval(() => {
+                        setExpandedImgIndex(prev => (prev + 1) % expandedGift.images.length);
+                    }, 3000); // Muda a foto a cada 3 segundos
+                }
+                return () => clearInterval(interval);
+            }, [expandedGift]);
+
+            const filteredGifts = useMemo(() => gifts.filter(g => {
+                const matchesSearch = g.name.toLowerCase().includes(searchTerm.toLowerCase());
+                let matchesStatus = true;
+                if (statusFilter === 'Disponíveis') matchesStatus = !g.takenBy;
+                else if (statusFilter === 'Reservados') matchesStatus = !!g.takenBy;
+                return matchesSearch && matchesStatus;
+            }), [gifts, searchTerm, statusFilter]);
+
+            const dashboardStats = useMemo(() => {
+                const parsePrice = (p) => parseFloat(String(p).replace('R$', '').replace(/\./g, '').replace(',', '.').trim()) || 0;
+                return gifts.reduce((acc, gift) => {
+                    const price = parsePrice(gift.price);
+                    acc.totalValue += price;
+                    acc.totalItems += 1;
+                    if (gift.takenBy) {
+                        acc.giftedValue += price;
+                        acc.giftedItems += 1;
+                        if (gift.paymentStatus === 'pago') acc.paidCount++;
+                        else acc.unpaidCount++;
+                    } else { acc.pendingValue += price; }
+                    return acc;
+                }, { totalValue: 0, giftedValue: 0, pendingValue: 0, paidCount: 0, unpaidCount: 0, totalItems: 0, giftedItems: 0 });
+            }, [gifts]);
+
+            const progressPercentage = useMemo(() => dashboardStats.totalItems === 0 ? 0 : Math.round((dashboardStats.giftedItems / dashboardStats.totalItems) * 100), [dashboardStats]);
+
+            const stats = useMemo(() => ({ available: gifts.filter(g => !g.takenBy).length, reserved: gifts.filter(g => g.takenBy).length }), [gifts]);
+            const currentUserRsvp = useMemo(() => rsvps.find(r => r.id === user?.uid), [rsvps, user?.uid]);
 
             const showMsg = (text, type = 'success') => {
                 setNotification({ text, type });
-                setTimeout(() => setNotification(null), 3000);
+                setTimeout(() => setNotification(null), 4000);
             };
 
             const hideLoader = () => {
                 const loader = document.getElementById('initial-loader');
                 if(loader) {
                     loader.style.opacity = '0';
+                    loader.style.pointerEvents = 'none';
                     setTimeout(() => loader.style.display = 'none', 500);
                 }
             };
 
+            const handlePaymentLink = () => {
+                if (!siteConfig.mercadoPagoLink) {
+                    showMsg("Link de pagamento não configurado.", "error");
+                    return;
+                }
+                let url = siteConfig.mercadoPagoLink.trim();
+                if (!/^https?:\/\//i.test(url)) {
+                    url = 'https://' + url;
+                }
+                window.open(url, '_blank');
+            };
+
             useEffect(() => {
                 const initAuth = async () => {
-                    try {
-                        const credential = await auth.signInAnonymously();
-                        setUser(credential.user);
-                    } catch (err) {
-                        console.error("Auth error:", err);
-                        hideLoader();
-                    }
+                    try { await auth.signInAnonymously(); } catch (e) { showMsg("Erro de autenticação.", "error"); }
+                    const unsub = auth.onAuthStateChanged(setUser);
+                    return () => unsub();
                 };
                 initAuth();
-                const timeout = setTimeout(hideLoader, 5000);
-                return () => clearTimeout(timeout);
             }, []);
 
             useEffect(() => {
@@ -260,171 +286,99 @@
                         setLoading(false); 
                         hideLoader(); 
                     },
-                    err => { console.error("Gifts fetch error:", err); hideLoader(); }
+                    err => { 
+                        if (err.code === 'permission-denied') showMsg("Acesso Negado: Verifique as Regras no Console do Firebase!", "error");
+                        setLoading(false); hideLoader();
+                    }
                 );
 
                 const unsubRsvps = path.collection('rsvp_list').onSnapshot(s => setRsvps(s.docs.map(d => ({id: d.id, ...d.data()}))));
                 const unsubConfig = path.collection('site_config').doc('main').onSnapshot(s => s.exists && setSiteConfig(prev => ({...prev, ...s.data()})));
-                const unsubCats = path.collection('categories').doc('list').onSnapshot(s => s.exists && setDynamicCategories(s.data().items));
 
-                return () => { unsubGifts(); unsubRsvps(); unsubConfig(); unsubCats(); };
+                return () => { unsubGifts(); unsubRsvps(); unsubConfig(); };
             }, [user]);
 
             const handleToggleGift = async (gift) => {
-                if (!user) return;
-                const ref = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(gift.id);
+                if (!user || isReserving) return;
+                setIsReserving(true);
                 try {
-                    await ref.update({ 
+                    await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(gift.id).update({ 
                         takenBy: guestName || "Convidado", 
                         takenById: user.uid, 
                         paymentStatus: 'não pago',
                         reservationDate: new Date().toISOString()
                     });
                     setShowPaymentModal(null);
-                    setExpandedGift(null);
-                    showMsg("Presente reservado com sucesso!");
-                } catch (e) {
-                    console.error("Erro ao reservar:", e);
-                    showMsg("Erro ao reservar presente.", "error");
-                }
-            };
-
-            const handleReleaseReservation = async (id) => {
-                if (!user) return;
-                try {
-                    await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(id).update({ 
-                        takenBy: null, 
-                        takenById: null, 
-                        paymentStatus: 'não pago' 
-                    });
-                    setConfirmReleaseId(null);
-                    showMsg("Reserva liberada.");
-                } catch (error) { console.error(error); }
+                    showMsg("Presente reservado!");
+                } catch (e) { showMsg("Erro ao reservar.", "error"); } finally { setIsReserving(false); }
             };
 
             const handleDeleteItem = async (id) => {
-                if (!user) return;
-                try {
-                    await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(id).delete();
-                    setConfirmDeleteId(null);
-                    showMsg("Item excluído.");
-                } catch (error) { console.error(error); }
+                try { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(id).delete(); showMsg("Item excluído."); } catch (e) { showMsg("Erro ao excluir.", "error"); }
             };
 
             const handleSaveGift = async (e) => {
                 e.preventDefault();
-                if (!user || isSaving) return;
-                
+                if (!user || isSaving || isImageProcessing) return;
                 setIsSaving(true);
                 const col = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items');
-                
-                const giftData = {
-                    ...formData,
-                    updatedAt: new Date().toISOString()
-                };
-
-                // Verificação de segurança: Firestore limite de 1MB por documento total
-                const dataSize = JSON.stringify(giftData).length;
-                if (dataSize > 1000000) { 
-                    showMsg("O item ainda está muito pesado para o sistema. Remova algumas imagens ou use ficheiros menores.", "error");
-                    setIsSaving(false);
-                    return;
-                }
-
                 try {
-                    if (editingGift) {
-                        await col.doc(editingGift.id).update(giftData);
-                        showMsg("Item atualizado!");
-                    } else {
-                        await col.add({
-                            ...giftData,
-                            takenBy: null,
-                            takenById: null,
-                            paymentStatus: 'não pago',
-                            createdAt: new Date().toISOString()
-                        });
-                        showMsg("Novo item adicionado!");
-                    }
-                    
-                    setSearchTerm(''); 
-                    setCategoryFilter('Todos'); 
-                    setFormData({ name: '', category: 'Cozinha', images: [], price: '', paymentStatus: 'não pago' });
-                    setEditingGift(null);
+                    if (editingGift) { await col.doc(editingGift.id).update({...formData, updatedAt: new Date().toISOString()}); showMsg("Atualizado!"); }
+                    else { await col.add({...formData, takenBy: null, takenById: null, createdAt: new Date().toISOString()}); showMsg("Adicionado!"); }
+                    setFormData({ name: '', price: '', images: [], paymentStatus: 'não pago' });
                     setShowAdminModal(false);
-                } catch (err) { 
-                    console.error("Save error:", err);
-                    showMsg("Erro ao guardar. O item pode exceder o limite técnico.", "error");
-                } finally {
-                    setIsSaving(false);
-                }
+                } catch (err) { showMsg("Erro ao guardar.", "error"); } finally { setIsSaving(false); }
             };
 
             const handleFileUpload = (e) => {
-                const files = Array.from(e.target.files);
-                files.forEach(file => {
-                    // ATUALIZADO: Aumento do limite para 3MB (3.145.728 bytes)
-                    if (file.size > 3145728) {
-                        showMsg(`O ficheiro "${file.name}" é muito grande! Use fotos com menos de 3MB.`, "error");
-                        return;
-                    }
-                    
-                    const reader = new FileReader();
-                    reader.onloadend = async () => {
-                        // Aplica compressão automática para garantir que caiba no Firestore (max 1mb doc total)
+                const file = e.target.files[0];
+                if (!file) return;
+
+                setIsImageProcessing(true);
+                const reader = new FileReader();
+                reader.onloadend = async () => {
+                    try {
                         const compressed = await compressImage(reader.result);
-                        setFormData(prev => ({ ...prev, images: [...prev.images, compressed] }));
-                    };
-                    reader.readAsDataURL(file);
-                });
+                        setFormData(prev => ({ 
+                            ...prev, 
+                            images: [...(prev.images || []), compressed]
+                        }));
+                        showMsg("Foto adicionada!");
+                    } catch (err) {
+                        showMsg("Erro ao processar imagem.", "error");
+                    } finally {
+                        setIsImageProcessing(false);
+                    }
+                };
+                reader.onerror = () => {
+                    showMsg("Erro ao ler ficheiro.", "error");
+                    setIsImageProcessing(false);
+                };
+                reader.readAsDataURL(file);
+                e.target.value = '';
             };
-
-            const openPaymentLink = () => {
-                if (!siteConfig.mercadoPagoLink || siteConfig.mercadoPagoLink === "#") {
-                    showMsg("Link de pagamento não configurado.", "error");
-                    return;
-                }
-                const url = siteConfig.mercadoPagoLink.startsWith('http') ? siteConfig.mercadoPagoLink : 'https://' + siteConfig.mercadoPagoLink;
-                window.open(url, '_blank');
-            };
-
-            const filteredGifts = useMemo(() => gifts.filter(g => 
-                g.name.toLowerCase().includes(searchTerm.toLowerCase()) && 
-                (categoryFilter === 'Todos' || g.category === categoryFilter)
-            ), [gifts, searchTerm, categoryFilter]);
 
             const adminFilteredGifts = useMemo(() => {
                 return gifts.filter(g => {
                     const matchesSearch = g.name.toLowerCase().includes(adminSearchTerm.toLowerCase());
-                    const matchesCategory = adminCategoryFilter === 'Todos' || g.category === adminCategoryFilter;
-                    
-                    const priceText = String(g.price || "0").replace('R$', '').trim().replace('.', '').replace(',', '.');
-                    const price = parseFloat(priceText || 0);
-                    
+                    const p = parseFloat(String(g.price || "0").replace('R$', '').replace(/\./g, '').replace(',', '.').trim()) || 0;
                     let matchesPrice = true;
-                    if (adminPriceRange === 'low') matchesPrice = price >= 30 && price <= 40;
-                    else if (adminPriceRange === 'medium') matchesPrice = price >= 45 && price <= 60;
-                    else if (adminPriceRange === 'high') matchesPrice = price >= 65 && price <= 100;
-
-                    return matchesSearch && matchesCategory && matchesPrice;
+                    if (adminPriceRange === 'baixo') matchesPrice = p >= 30 && p <= 40;
+                    else if (adminPriceRange === 'medio') matchesPrice = p >= 45 && p <= 60;
+                    else if (adminPriceRange === 'alto') matchesPrice = p >= 65 && p <= 250;
+                    return matchesSearch && matchesPrice;
                 });
-            }, [gifts, adminSearchTerm, adminCategoryFilter, adminPriceRange]);
-
-            const stats = useMemo(() => ({
-                available: gifts.filter(g => !g.takenBy).length,
-                reserved: gifts.filter(g => g.takenBy).length
-            }), [gifts]);
-
-            const currentUserRsvp = useMemo(() => rsvps.find(r => r.id === user?.uid), [rsvps, user?.uid]);
+            }, [gifts, adminSearchTerm, adminPriceRange]);
 
             if (!isNameSet && viewMode === 'guest') {
                 return (
                     <div className="min-h-screen flex items-center justify-center p-4 bg-[#f4f5f0]">
-                        <div className="bg-white max-w-md w-full rounded-[2.5rem] p-8 shadow-xl text-center zoom-in">
+                        <div className="bg-white max-w-md w-full rounded-[2.5rem] p-8 shadow-xl text-center border border-gray-100 zoom-in">
                             <h1 className="text-3xl font-serif font-bold mb-6 text-[#2f3b1c]">Bem-vindos!</h1>
                             <form onSubmit={(e) => { e.preventDefault(); localStorage.setItem('guest_name', guestName); localStorage.setItem('guest_phone', guestPhone); setIsNameSet(true); }} className="space-y-4">
-                                <input type="text" placeholder="O seu Nome" className="w-full p-4 rounded-2xl bg-gray-50 border outline-none font-bold focus:ring-2 focus:ring-[#556b2f] transition-all" value={guestName} onChange={e => setGuestName(e.target.value)} required />
-                                <input type="tel" placeholder="O seu Telemóvel" className="w-full p-4 rounded-2xl bg-gray-50 border outline-none font-bold focus:ring-2 focus:ring-[#556b2f] transition-all" value={guestPhone} onChange={e => setGuestPhone(e.target.value)} required />
-                                <button className={`w-full py-4 rounded-2xl text-white font-bold transition-all ${THEME.primary}`}>Entrar</button>
+                                <input type="text" placeholder="Seu Nome" className="w-full p-4 rounded-2xl bg-gray-50 border outline-none font-bold focus:ring-2 focus:ring-[#556b2f]" value={guestName} onChange={e => setGuestName(e.target.value)} required />
+                                <input type="tel" placeholder="Seu Telemóvel" className="w-full p-4 rounded-2xl bg-gray-50 border outline-none font-bold focus:ring-2 focus:ring-[#556b2f]" value={guestPhone} onChange={e => setGuestPhone(e.target.value)} required />
+                                <button className={`w-full py-4 rounded-2xl text-white font-bold transition-all shadow-lg active:scale-95 ${THEME.primary}`}>Entrar na Lista</button>
                             </form>
                             <button onClick={() => setViewMode('admin-login')} className="mt-6 text-gray-300 text-xs uppercase tracking-widest font-bold hover:text-[#556b2f]">Painel Administrativo</button>
                         </div>
@@ -435,222 +389,171 @@
             return (
                 <div className="min-h-screen pb-20 fade-in">
                     {notification && (
-                        <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[1000] px-6 py-3 rounded-full shadow-2xl font-bold text-white text-sm animate-bounce ${notification.type === 'error' ? 'bg-red-500' : 'bg-green-600'}`}>
+                        <div className={`fixed top-6 left-1/2 -translate-x-1/2 z-[1000] px-6 py-3 rounded-full shadow-2xl font-bold text-white text-sm text-center ${notification.type === 'error' ? 'bg-red-500' : 'bg-green-600'}`}>
                             {notification.text}
                         </div>
                     )}
 
-                    {user && viewMode === 'guest' && (
-                        <button onClick={() => setViewMode('admin-login')} className="fixed bottom-6 right-6 z-[300] bg-white p-3 rounded-full shadow-lg text-gray-400 hover:text-[#556b2f] border transition-all">
-                            <Icons.Settings size={20} />
-                        </button>
-                    )}
-
-                    <header className="bg-white shadow-sm sticky top-0 z-20 px-4 py-3">
-                        <div className="max-w-6xl mx-auto flex justify-between items-center">
+                    <header className="bg-white shadow-sm sticky top-0 z-20 px-4 py-3 border-b border-gray-100 flex justify-between items-center">
+                        <div className="max-w-6xl mx-auto w-full flex justify-between items-center px-4">
                             <h1 className="font-serif font-bold flex items-center gap-2 text-[#2f3b1c]"><Icons.Gift className="text-[#556b2f]"/> Lista de Presentes</h1>
-                            <button onClick={() => setViewMode('admin-login')} className="p-2 text-gray-300 hover:text-[#556b2f] transition-colors"><Icons.Lock size={16}/></button>
+                            {viewMode === 'guest' && <button onClick={() => setViewMode('admin-login')} className="p-2 text-gray-300 hover:text-[#556b2f] transition-colors"><Icons.Lock size={16}/></button>}
                         </div>
                     </header>
 
-                    <div className={`${THEME.primary} text-white py-20 px-4 text-center shadow-inner relative overflow-hidden`}>
-                        <div className="max-w-4xl mx-auto relative z-10">
-                            <h1 className="text-7xl md:text-9xl font-script mb-4 text-[#d2b48c] drop-shadow-md">Areli & Jordan</h1>
-                            <h2 className="text-lg uppercase tracking-[0.3em] font-medium opacity-80 mb-8">{siteConfig.eventTitle}</h2>
-                            <p className="italic font-light opacity-90 max-w-lg mx-auto border-t border-b border-white/20 py-4 mb-10">{siteConfig.welcomeMessage}</p>
-                            
-                            <button 
-                                onClick={() => setShowRsvpModal(true)} 
-                                className={`px-10 py-4 rounded-full font-bold shadow-2xl transition-transform hover:scale-105 active:scale-95 text-sm uppercase tracking-widest ${currentUserRsvp?.status === 'confirmed' ? 'bg-green-600 text-white' : currentUserRsvp?.status === 'declined' ? 'bg-red-600 text-white' : 'bg-white text-[#2f3b1c]'}`}
-                            >
-                                {currentUserRsvp?.status === 'confirmed' ? '✓ Presença Confirmada' : currentUserRsvp?.status === 'declined' ? '✕ Não poderei ir' : 'Confirmar Presença'}
-                            </button>
+                    {viewMode === 'guest' && (
+                        <>
+                            <div className={`${THEME.primary} text-white py-20 px-4 text-center shadow-inner relative overflow-hidden`}>
+                                <div className="max-w-4xl mx-auto relative z-10">
+                                    <h1 className="text-7xl md:text-9xl font-script mb-4 text-[#d2b48c] drop-shadow-md">Areli & Jordan</h1>
+                                    <h2 className="text-lg uppercase tracking-[0.3em] font-medium opacity-80 mb-8">{siteConfig.eventTitle}</h2>
+                                    
+                                    <button onClick={() => setShowRsvpModal(true)} className={`px-10 py-4 rounded-full font-bold shadow-2xl transition-transform hover:scale-105 active:scale-95 text-sm uppercase tracking-widest ${currentUserRsvp?.status === 'confirmed' ? 'bg-green-600 text-white' : currentUserRsvp?.status === 'declined' ? 'bg-red-600 text-white' : 'bg-white text-[#2f3b1c]'}`}>
+                                        {currentUserRsvp?.status === 'confirmed' ? '✓ Presença Confirmada' : currentUserRsvp?.status === 'declined' ? '✕ Não poderei ir' : 'Confirmar Presença'}
+                                    </button>
 
-                            <div className="flex justify-center gap-6 mt-12 text-sm font-medium flex-wrap">
-                                <div className="flex items-center gap-2 bg-white/10 px-6 py-2 rounded-full border border-white/20 backdrop-blur-sm"><Icons.Calendar size={16} className="text-[#d2b48c]"/> {siteConfig.eventDate}</div>
-                                <div className="flex items-center gap-2 bg-white/10 px-6 py-2 rounded-full border border-white/20 backdrop-blur-sm"><Icons.MapPin size={16} className="text-[#d2b48c]"/> {siteConfig.eventLocation}</div>
-                            </div>
-                            
-                            <div className="flex justify-center gap-4 mt-10">
-                                <div className="bg-white p-4 rounded-2xl shadow-lg min-w-[140px] flex flex-col items-center justify-center border border-white/20">
-                                    <Icons.Gift size={24} className="text-[#556b2f] mb-2" />
-                                    <span className="block text-[10px] uppercase font-black text-gray-300 tracking-widest mb-1">Disponíveis</span>
-                                    <span className="text-3xl font-black text-[#556b2f]">{stats.available}</span>
-                                </div>
-                                <div className="bg-white p-4 rounded-2xl shadow-lg min-w-[140px] flex flex-col items-center justify-center border border-white/20">
-                                    <Icons.Heart size={24} className="text-red-500 mb-2" />
-                                    <span className="block text-[10px] uppercase font-black text-gray-300 tracking-widest mb-1">Reservados</span>
-                                    <span className="text-3xl font-black text-red-500">{stats.reserved}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <main className="max-w-6xl mx-auto px-4 mt-12">
-                        <div className="flex flex-col md:flex-row gap-4 mb-8">
-                            <div className="flex-1 bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 border border-gray-100">
-                                <Icons.Search className="text-gray-400" />
-                                <input type="text" placeholder="O que deseja oferecer?" className="flex-1 outline-none text-gray-700 bg-transparent font-bold" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-                            </div>
-                            <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
-                                <button onClick={() => setCategoryFilter('Todos')} className={`px-6 py-3 rounded-full text-xs font-bold border transition-all whitespace-nowrap ${categoryFilter === 'Todos' ? `${THEME.primary} text-white border-transparent` : 'bg-white text-gray-400 border-gray-200'}`}>Todos</button>
-                                {dynamicCategories.map(cat => (
-                                    <button key={cat} onClick={() => setCategoryFilter(cat)} className={`px-6 py-3 rounded-full text-xs font-bold border transition-all whitespace-nowrap ${categoryFilter === cat ? `${THEME.primary} text-white border-transparent` : 'bg-white text-gray-400 border-gray-200'}`}>{cat}</button>
-                                ))}
-                            </div>
-                        </div>
-
-                        {loading ? (
-                            <div className="flex flex-col items-center py-20 gap-4 text-gray-400"><Icons.Loader2 size={40} /><p className="font-bold text-sm tracking-widest uppercase">A carregar...</p></div>
-                        ) : (
-                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                                {filteredGifts.length > 0 ? filteredGifts.map(g => (
-                                    <GiftCard key={g.id} gift={g} user={user} theme={THEME} onToggle={setShowPaymentModal} onExpand={(gift) => { setExpandedGift(gift); setExpandedImgIndex(0); }} />
-                                )) : (
-                                    <div className="col-span-full py-20 text-center border-4 border-dashed border-gray-100 rounded-[3rem] text-gray-300 font-bold italic">Nenhum item encontrado nesta categoria.</div>
-                                )}
-                            </div>
-                        )}
-                    </main>
-
-                    {/* Modal Pagamento */}
-                    {showPaymentModal && (
-                        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                            <div className="bg-white rounded-[3rem] max-w-sm w-full p-10 shadow-2xl text-center relative zoom-in">
-                                <button onClick={() => setShowPaymentModal(null)} className="absolute top-6 right-6 text-gray-300 hover:text-red-500 transition-colors"><Icons.X /></button>
-                                <Icons.Gift size={40} className="mx-auto text-[#556b2f] mb-4" />
-                                <h3 className="text-2xl font-bold mb-1 text-[#2f3b1c]">Oferecer</h3>
-                                <p className="text-xs text-gray-400 mb-2 italic">"{showPaymentModal.name}"</p>
-                                
-                                {showPaymentModal.price && (
-                                    <div className="mb-6 inline-block px-4 py-1.5 bg-[#556b2f]/10 text-[#556b2f] rounded-full font-black text-sm border border-[#556b2f]/20">
-                                        Valor: R$ {showPaymentModal.price}
+                                    <div className="flex justify-center gap-4 mt-12 text-sm font-medium flex-wrap">
+                                        <div className="flex items-center gap-2 bg-white/10 px-6 py-2 rounded-full border border-white/20 backdrop-blur-sm"><Icons.Calendar size={16} className="text-[#d2b48c]"/> {siteConfig.eventDate}</div>
+                                        <div className="flex items-center gap-2 bg-white/10 px-6 py-2 rounded-full border border-white/20 backdrop-blur-sm"><Icons.MapPin size={16} className="text-[#d2b48c]"/> {siteConfig.eventLocation}</div>
                                     </div>
-                                )}
-                                
-                                <div className="space-y-6 mb-10">
-                                    <div className="text-left">
-                                        <div className="flex items-center gap-2 mb-2 ml-2">
-                                            <Icons.QrCode size={14} className="text-[#556b2f]" />
-                                            <label className="text-[10px] font-black text-gray-400 uppercase block tracking-widest">Pagar via Pix</label>
+                                    
+                                    <div className="flex justify-center gap-4 mt-10">
+                                        <div className="bg-white p-4 rounded-2xl shadow-lg min-w-[140px] flex flex-col items-center justify-center border border-white/20 text-[#556b2f]">
+                                            <Icons.Gift size={24} className="mb-2" /><span className="block text-[10px] uppercase font-black text-gray-300 tracking-widest mb-1">Disponíveis</span><span className="text-3xl font-black">{stats.available}</span>
                                         </div>
-                                        <div className="flex gap-2">
-                                            <div className="flex-1 bg-gray-50 p-4 rounded-2xl text-xs font-mono border truncate">
-                                                {siteConfig.pixKey || "Chave não configurada"}
-                                            </div>
-                                            {siteConfig.pixKey && (
-                                                <button onClick={() => { 
-                                                    const el = document.createElement('textarea');
-                                                    el.value = siteConfig.pixKey;
-                                                    document.body.appendChild(el);
-                                                    el.select();
-                                                    document.execCommand('copy');
-                                                    document.body.removeChild(el);
-                                                    showMsg('Chave Pix copiada!'); 
-                                                }} className="p-4 bg-gray-100 rounded-2xl text-[#556b2f] hover:bg-gray-200 transition-colors">
-                                                    <Icons.Copy size={18}/>
-                                                </button>
-                                            )}
+                                        <div className="bg-white p-4 rounded-2xl shadow-lg min-w-[140px] flex flex-col items-center justify-center border border-white/20 text-red-500">
+                                            <Icons.Heart size={24} className="mb-2" /><span className="block text-[10px] uppercase font-black text-gray-300 tracking-widest mb-1">Reservados</span><span className="text-3xl font-black">{stats.reserved}</span>
                                         </div>
                                     </div>
-                                    <div className="text-left">
-                                        <label className="text-[10px] font-black text-gray-400 uppercase ml-2 mb-2 block tracking-widest">Pagamento Online</label>
-                                        <button onClick={openPaymentLink} className="w-full flex items-center justify-between p-4 bg-blue-50 text-blue-600 rounded-2xl text-sm font-bold border border-blue-100 hover:bg-blue-100 transition-colors">
-                                            Cartão Crédito <Icons.ExternalLink size={18}/>
-                                        </button>
+                                </div>
+                            </div>
+
+                            <main className="max-w-6xl mx-auto px-4 mt-12">
+                                <div className="flex flex-col md:flex-row gap-4 mb-12">
+                                    <div className="flex-1 bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 border border-gray-100">
+                                        <Icons.Search className="text-gray-400" />
+                                        <input type="text" placeholder="Procurar presente..." className="flex-1 outline-none text-gray-700 bg-transparent font-bold" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                                    </div>
+                                    <div className="flex bg-white p-1 rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                                        {['Todos', 'Disponíveis', 'Reservados'].map(s => (
+                                            <button key={s} onClick={() => setStatusFilter(s)} className={`px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${statusFilter === s ? `${THEME.primary} text-white shadow-md` : 'text-gray-400 hover:text-[#556b2f]'}`}>{s}</button>
+                                        ))}
                                     </div>
                                 </div>
-
-                                <div className="flex flex-col gap-3">
-                                    <button onClick={() => handleToggleGift(showPaymentModal)} className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-[10px] shadow-lg transition-all ${THEME.primary} hover:opacity-90`}>Confirmar Envio do Presente</button>
-                                    <button onClick={() => setShowPaymentModal(null)} className="py-2 text-gray-300 text-[10px] font-bold uppercase tracking-widest hover:text-[#556b2f]">Voltar</button>
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                    {filteredGifts.map(g => (
+                                        <GiftCard key={g.id} gift={g} user={user} theme={THEME} onToggle={setShowPaymentModal} onExpand={setExpandedGift} />
+                                    ))}
+                                    {filteredGifts.length === 0 && !loading && <div className="col-span-full py-20 text-center text-gray-300 font-bold italic">Nenhum item encontrado.</div>}
                                 </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {expandedGift && (
-                        <div className="fixed inset-0 z-[150] bg-white overflow-y-auto p-6 md:p-12 fade-in">
-                            <button onClick={() => setExpandedGift(null)} className="fixed top-8 right-8 z-[160] bg-gray-100 p-3 rounded-full hover:bg-gray-200 transition-colors"><Icons.X /></button>
-                            <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-12 items-center min-h-full">
-                                <div className="w-full md:w-1/2 relative">
-                                    <img src={(expandedGift.images?.length > 0 ? expandedGift.images : [expandedGift.image])[expandedImgIndex]} className="w-full aspect-square object-cover rounded-[3rem] shadow-2xl border transition-opacity duration-1000" />
-                                    {((expandedGift.images?.length || 0) > 1) && (
-                                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-                                            {expandedGift.images.map((_, i) => <div key={i} className={`h-1.5 rounded-full transition-all ${i === expandedImgIndex ? `w-8 ${THEME.primary}` : 'w-2 bg-black/20'}`} />)}
-                                        </div>
-                                    )}
-                                </div>
-                                <div className="w-full md:w-1/2 flex flex-col">
-                                    <span className="text-[#556b2f] font-black uppercase tracking-[0.2em] text-xs mb-4">{expandedGift.category}</span>
-                                    <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#2f3b1c] mb-4 leading-tight">{expandedGift.name}</h2>
-                                    {expandedGift.price && <div className="mb-8 inline-block px-6 py-3 bg-[#556b2f]/10 text-[#556b2f] rounded-2xl font-black text-3xl border border-[#556b2f]/20 shadow-sm w-fit">R$ {expandedGift.price}</div>}
-                                    {!expandedGift.takenBy && <button onClick={() => setShowPaymentModal(expandedGift)} className={`w-full py-6 rounded-3xl text-white text-xl font-black shadow-xl transition-all ${THEME.primary} hover:opacity-95 flex items-center justify-center gap-3`}><Icons.Heart fill="white" /> OFERECER AGORA</button>}
-                                </div>
-                            </div>
-                        </div>
+                            </main>
+                        </>
                     )}
 
                     {viewMode === 'admin-panel' && (
                         <div className="fixed inset-0 bg-white z-[500] overflow-y-auto pb-20">
                             <header className={`${THEME.primary} text-white p-6 sticky top-0 flex justify-between items-center shadow-lg z-10`}>
                                 <div className="font-bold flex items-center gap-2 uppercase tracking-widest text-sm"><Icons.Lock size={18}/> Painel Admin</div>
-                                <button onClick={() => setViewMode('guest')} className="text-xs bg-white/20 px-4 py-2 rounded-full font-bold hover:bg-white/30">Sair do Painel</button>
+                                <button onClick={() => setViewMode('guest')} className="text-xs bg-white/20 px-4 py-2 rounded-full font-bold hover:bg-white/30">Voltar à Lista</button>
                             </header>
 
                             <div className="max-w-6xl mx-auto p-6">
-                                <div className="flex gap-4 mb-8 overflow-x-auto no-scrollbar border-b">
-                                    {['gifts', 'reservados', 'prices', 'config', 'rsvp'].map(t => (
+                                <div className="flex gap-4 mb-8 overflow-x-auto no-scrollbar border-b border-gray-100">
+                                    {['dashboard', 'gifts', 'reservados', 'prices', 'config', 'rsvp'].map(t => (
                                         <button key={t} onClick={() => setAdminTab(t)} className={`pb-4 px-6 font-black text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${adminTab === t ? 'border-b-4 border-[#556b2f] text-[#556b2f]' : 'text-gray-300'}`}>
-                                            {t === 'gifts' ? 'Itens' : t === 'reservados' ? 'Reservas' : t === 'prices' ? 'Preços' : t === 'config' ? 'Site' : 'Convidados'}
+                                            {t === 'dashboard' ? 'Estatísticas' : t === 'gifts' ? 'Itens' : t === 'reservados' ? 'Reservas' : t === 'prices' ? 'Preços' : t === 'config' ? 'Site' : 'Convidados'}
                                         </button>
                                     ))}
                                 </div>
 
+                                {adminTab === 'dashboard' && (
+                                    <div className="fade-in space-y-8">
+                                        <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden relative group">
+                                            <div className="relative z-10">
+                                                <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+                                                    <div><h3 className="text-xl font-serif font-bold text-[#2f3b1c]">Progresso da Lista</h3><p className="text-[10px] uppercase font-bold text-gray-300 mt-1">Status Geral dos Itens</p></div>
+                                                    <div className="flex items-center gap-8">
+                                                        <div className="text-center">
+                                                            <span className="block text-4xl font-black text-[#556b2f]">{dashboardStats.giftedItems}</span>
+                                                            <span className="text-[10px] uppercase font-black text-gray-300">Presenteados</span>
+                                                        </div>
+                                                        <div className="h-10 w-[1px] bg-gray-100"></div>
+                                                        <div className="text-center">
+                                                            <span className="block text-4xl font-black text-gray-300">{dashboardStats.totalItems}</span>
+                                                            <span className="text-[10px] uppercase font-black text-gray-300">Itens Totais</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="relative w-full h-5 bg-gray-50 rounded-full overflow-hidden border">
+                                                    <div className={`${THEME.primary} h-full transition-all duration-1000 ease-out flex items-center justify-end px-2`} style={{ width: `${progressPercentage}%` }}>
+                                                        {progressPercentage > 5 && <span className="text-[8px] text-white font-black">{progressPercentage}%</span>}
+                                                    </div>
+                                                </div>
+                                                <div className="mt-2 text-[10px] font-bold text-[#556b2f] uppercase tracking-widest">{progressPercentage}% concluído</div>
+                                            </div>
+                                            <Icons.TrendingUp className="absolute -bottom-10 -right-10 text-gray-50/50 w-64 h-64 pointer-events-none" />
+                                        </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                            <div className="bg-white p-6 rounded-3xl border text-center shadow-sm">
+                                                <Icons.BarChart2 className="mx-auto text-gray-300 mb-2" />
+                                                <span className="text-[10px] font-black uppercase text-gray-300 block">Valor Total</span>
+                                                <span className="text-xl font-black">R$ {dashboardStats.totalValue.toLocaleString('pt-BR')}</span>
+                                            </div>
+                                            <div className="bg-white p-6 rounded-3xl border border-green-100 text-center shadow-sm text-green-600">
+                                                <Icons.Heart className="mx-auto text-green-400 mb-2" />
+                                                <span className="text-[10px] font-black uppercase text-gray-400 block">Valor Ganho</span>
+                                                <span className="text-xl font-black">R$ {dashboardStats.giftedValue.toLocaleString('pt-BR')}</span>
+                                            </div>
+                                            <div className="bg-white p-6 rounded-3xl border border-yellow-100 text-center shadow-sm text-yellow-600">
+                                                <Icons.DollarSign className="mx-auto text-yellow-400 mb-2" />
+                                                <span className="text-[10px] font-black uppercase text-gray-400 block">Valor Pendente</span>
+                                                <span className="text-xl font-black">R$ {dashboardStats.pendingValue.toLocaleString('pt-BR')}</span>
+                                            </div>
+                                            <div className="bg-white p-6 rounded-3xl border text-center shadow-sm">
+                                                <Icons.CheckCircle className="mx-auto text-[#556b2f] mb-2" />
+                                                <span className="text-[10px] font-black uppercase text-gray-400 block">Pagos</span>
+                                                <span className="text-xl font-black">{dashboardStats.paidCount} / {dashboardStats.giftedItems}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
                                 {adminTab === 'gifts' && (
                                     <div className="fade-in">
                                         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
-                                            <button onClick={() => { setEditingGift(null); setFormData({name: '', category: 'Cozinha', images: [], price: '', paymentStatus: 'não pago'}); setShowAdminModal(true); }} className={`w-full md:w-auto px-8 py-4 rounded-2xl text-white font-black text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all ${THEME.primary} hover:opacity-90`}>
-                                                <Icons.Plus size={18}/> Novo Presente
-                                            </button>
-
-                                            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto flex-1 md:justify-end">
-                                                <div className="relative flex-1 max-w-sm">
+                                            <button onClick={() => { setEditingGift(null); setFormData({name: '', price: '', images: [], paymentStatus: 'não pago'}); setShowAdminModal(true); }} className={`px-8 py-3 rounded-2xl text-white font-black text-xs uppercase tracking-widest ${THEME.primary}`}>+ Novo Item</button>
+                                            
+                                            <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+                                                <div className="relative flex-1">
                                                     <Icons.Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
-                                                    <input type="text" placeholder="Pesquisar item..." className="w-full pl-10 pr-4 py-3 bg-gray-50 border rounded-xl text-xs outline-none focus:ring-2 focus:ring-[#556b2f] font-bold" value={adminSearchTerm} onChange={(e) => setAdminSearchTerm(e.target.value)} />
+                                                    <input 
+                                                        type="text" 
+                                                        placeholder="Pesquisar itens..." 
+                                                        className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-xs font-bold outline-none focus:ring-1 focus:ring-[#556b2f]" 
+                                                        value={adminSearchTerm} 
+                                                        onChange={e => setAdminSearchTerm(e.target.value)} 
+                                                    />
                                                 </div>
-
-                                                <select className="px-4 py-3 bg-gray-50 border rounded-xl text-xs font-bold outline-none cursor-pointer" value={adminCategoryFilter} onChange={(e) => setAdminCategoryFilter(e.target.value)}>
-                                                    <option value="Todos">Todas Categorias</option>
-                                                    {dynamicCategories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                                                
+                                                <select className="px-4 py-2 border rounded-xl text-xs font-bold outline-none focus:ring-1 focus:ring-[#556b2f]" value={adminPriceRange} onChange={e => setAdminPriceRange(e.target.value)}>
+                                                    <option value="Todos">Todos os Preços</option>
+                                                    <option value="baixo">30 - 40</option>
+                                                    <option value="medio">45 - 60</option>
+                                                    <option value="alto">65 - 250</option>
                                                 </select>
-
-                                                <div className="relative">
-                                                    <Icons.DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
-                                                    <select className="pl-9 pr-4 py-3 bg-gray-50 border rounded-xl text-xs font-bold outline-none cursor-pointer" value={adminPriceRange} onChange={(e) => setAdminPriceRange(e.target.value)}>
-                                                        <option value="Todos">Todos os Valores</option>
-                                                        <option value="low">Entre 30 e 40 - Menor Preço</option>
-                                                        <option value="medium">Entre 45 e 60 - Preço Médio</option>
-                                                        <option value="high">Entre 65 e 100 - Maior Preço</option>
-                                                    </select>
-                                                </div>
                                             </div>
                                         </div>
-
                                         <div className="grid gap-4">
                                             {adminFilteredGifts.map(g => (
-                                                <div key={g.id} className="p-4 bg-white rounded-2xl flex justify-between items-center border group shadow-sm hover:border-[#556b2f] transition-all">
-                                                    <div className="flex items-center gap-4 overflow-hidden">
-                                                        <img src={(g.images?.[0] || g.image) || 'https://placehold.co/100'} className="w-16 h-16 rounded-xl object-cover border flex-shrink-0" />
-                                                        <div className="truncate"><p className="font-bold text-[#2f3b1c] truncate">{g.name}</p><p className="text-[10px] text-gray-400 font-bold uppercase">{g.category} {g.price && `• R$ ${g.price}`}</p></div>
+                                                <div key={g.id} className="p-4 bg-white rounded-2xl flex justify-between items-center border shadow-sm">
+                                                    <div className="flex items-center gap-4">
+                                                        <img src={g.images?.[0] || g.image || 'https://placehold.co/100'} className="w-12 h-12 rounded-xl object-cover border" />
+                                                        <div><p className="font-bold text-sm">{g.name}</p><p className="text-[10px] text-gray-400 font-bold">R$ {g.price}</p></div>
                                                     </div>
                                                     <div className="flex gap-2">
-                                                        <button onClick={() => { setEditingGift(g); setFormData({...g, images: g.images || (g.image ? [g.image] : [])}); setShowAdminModal(true); }} className="p-3 text-blue-500 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors"><Icons.Edit2 size={18}/></button>
-                                                        {confirmDeleteId === g.id ? (
-                                                            <div className="flex gap-1"><button onClick={() => handleDeleteItem(g.id)} className="bg-red-600 text-white px-3 py-2 rounded-xl text-[10px] font-bold">Sim</button><button onClick={() => setConfirmDeleteId(null)} className="bg-gray-200 text-gray-500 px-3 py-2 rounded-xl text-[10px] font-bold">Não</button></div>
-                                                        ) : (
-                                                            <button onClick={() => setConfirmDeleteId(g.id)} className="p-3 text-red-500 bg-red-50 rounded-xl hover:bg-red-100 transition-colors"><Icons.Trash2 size={18}/></button>
-                                                        )}
+                                                        <button onClick={() => { setEditingGift(g); setFormData(g); setShowAdminModal(true); }} className="p-2 text-blue-500 bg-blue-50 rounded-lg"><Icons.Edit2 size={16}/></button>
+                                                        <button onClick={() => setConfirmDeleteId(g.id)} className="p-2 text-red-500 bg-red-50 rounded-lg"><Icons.Trash2 size={16}/></button>
                                                     </div>
                                                 </div>
                                             ))}
@@ -658,73 +561,61 @@
                                     </div>
                                 )}
 
-                                {/* Outras Abas (Reservados, Preços, Config, RSVP) permanecem iguais */}
                                 {adminTab === 'reservados' && (
-                                    <div className="bg-white p-8 rounded-[3rem] border fade-in">
-                                        <h2 className="text-2xl font-serif font-bold text-[#2f3b1c] mb-6">Controlo de Reservas</h2>
-                                        <div className="divide-y space-y-4">
-                                            {gifts.filter(g => g.takenBy).map(g => (
-                                                <div key={g.id} className="py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 group">
-                                                    <div className="flex items-center gap-4">
-                                                        <img src={g.images?.[0] || g.image} className="w-12 h-12 rounded-lg object-cover border" />
-                                                        <div><p className="font-bold text-sm">{g.name}</p><p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Reservado por: <span className="text-[#556b2f] font-black">{g.takenBy}</span></p></div>
-                                                    </div>
-                                                    <div className="flex flex-wrap items-center gap-3">
-                                                        <select value={g.paymentStatus || 'não pago'} onChange={(e) => db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(g.id).update({ paymentStatus: e.target.value })} className={`text-[10px] font-black px-4 py-2 rounded-full border outline-none cursor-pointer transition-all ${g.paymentStatus === 'pago' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-yellow-50 text-yellow-600 border-yellow-100'}`}><option value="não pago">NÃO PAGO</option><option value="pago">PAGO</option></select>
-                                                        {confirmReleaseId === g.id ? (
-                                                            <div className="flex gap-1 bg-red-50 p-1 rounded-full border"><button onClick={() => handleReleaseReservation(g.id)} className="bg-red-600 text-white px-3 py-1.5 rounded-full text-[9px] font-black uppercase">Libertar</button><button onClick={() => setConfirmReleaseId(null)} className="bg-gray-200 text-gray-600 px-3 py-1.5 rounded-full text-[9px] font-black uppercase">Cancelar</button></div>
-                                                        ) : (
-                                                            <button onClick={() => setConfirmReleaseId(g.id)} className="px-4 py-2 bg-red-50 text-red-600 rounded-full text-[10px] font-black uppercase border hover:bg-red-100 transition-colors">Libertar Reserva</button>
-                                                        )}
-                                                    </div>
+                                    <div className="bg-white p-8 rounded-[3rem] border fade-in space-y-4">
+                                        <h3 className="font-serif font-bold text-xl mb-4">Gestão de Reservas</h3>
+                                        {gifts.filter(g => g.takenBy).map(g => (
+                                            <div key={g.id} className="py-4 border-b last:border-0 flex justify-between items-center">
+                                                <div><p className="font-bold">{g.name}</p><p className="text-xs text-gray-400">Por: <span className="text-[#556b2f]">{g.takenBy}</span></p></div>
+                                                <div className="flex gap-2">
+                                                    <select value={g.paymentStatus || 'não pago'} onChange={(e) => db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(g.id).update({ paymentStatus: e.target.value })} className={`px-4 py-1 rounded-full text-[10px] font-black uppercase border ${g.paymentStatus === 'pago' ? 'bg-green-100 text-green-700' : 'bg-yellow-50 text-yellow-600'}`}>
+                                                        <option value="não pago">NÃO PAGO</option>
+                                                        <option value="pago">PAGO</option>
+                                                    </select>
+                                                    <button onClick={() => setConfirmReleaseId(g.id)} className="px-4 py-1 bg-red-50 text-red-600 rounded-full text-[10px] font-black uppercase border">Libertar</button>
                                                 </div>
-                                            ))}
-                                            {gifts.filter(g => g.takenBy).length === 0 && <p className="py-20 text-center text-gray-300 italic">Sem reservas.</p>}
-                                        </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 )}
 
                                 {adminTab === 'prices' && (
-                                    <div className="bg-gray-50 p-8 rounded-[3rem] border fade-in">
-                                        <h2 className="text-2xl font-serif font-bold mb-6 text-[#2f3b1c]">Ajuste Rápido</h2>
-                                        <div className="space-y-4">
-                                            {gifts.map(g => (
-                                                <div key={g.id} className="flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100 hover:border-[#556b2f] transition-all">
-                                                    <span className="font-bold text-gray-700 text-sm truncate max-w-[200px]">{g.name}</span>
-                                                    <div className="flex items-center gap-2"><span className="text-xs font-black text-gray-300">R$</span><input type="text" className="w-24 p-2 bg-gray-50 border rounded-xl font-mono text-xs font-bold text-center outline-none focus:ring-2 focus:ring-[#556b2f]" placeholder="0,00" value={g.price || ''} onChange={(e) => db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(g.id).update({ price: e.target.value })} /></div>
-                                                </div>
-                                            ))}
-                                        </div>
+                                    <div className="bg-white p-8 rounded-[3rem] border fade-in space-y-4">
+                                        <h3 className="font-serif font-bold text-xl mb-6">Ajuste Rápido</h3>
+                                        {gifts.map(g => (
+                                            <div key={g.id} className="flex justify-between items-center p-3 border-b">
+                                                <span className="text-sm font-bold">{g.name}</span>
+                                                <input type="text" className="w-24 p-2 border rounded-xl text-center text-xs font-bold outline-none" value={g.price || ''} onChange={(e) => db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(g.id).update({ price: e.target.value })} />
+                                            </div>
+                                        ))}
                                     </div>
                                 )}
 
                                 {adminTab === 'config' && (
-                                    <div className="space-y-8 bg-gray-50 p-8 md:p-12 rounded-[3rem] border fade-in">
-                                        <h2 className="text-2xl font-serif font-bold">Configuração</h2>
-                                        <div className="grid md:grid-cols-2 gap-6">
-                                            <div className="space-y-4">
-                                                <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Título</label><input className="w-full p-4 border rounded-2xl font-bold font-serif text-lg outline-none focus:ring-2 focus:ring-[#556b2f]" value={siteConfig.eventTitle} onChange={e => setSiteConfig({...siteConfig, eventTitle: e.target.value})} /></div>
-                                                <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Data</label><input className="w-full p-4 border rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" value={siteConfig.eventDate} onChange={e => setSiteConfig({...siteConfig, eventDate: e.target.value})} /></div>
-                                                <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Local</label><input className="w-full p-4 border rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" value={siteConfig.eventLocation} onChange={e => setSiteConfig({...siteConfig, eventLocation: e.target.value})} /></div>
-                                            </div>
-                                            <div className="space-y-4">
-                                                <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Chave PIX</label><input className="w-full p-4 border rounded-2xl font-bold font-mono outline-none focus:ring-2 focus:ring-[#556b2f]" value={siteConfig.pixKey} onChange={e => setSiteConfig({...siteConfig, pixKey: e.target.value})} /></div>
-                                                <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Link Pagamento</label><input className="w-full p-4 border rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#556b2f] text-xs" value={siteConfig.mercadoPagoLink} placeholder="https://..." onChange={e => setSiteConfig({...siteConfig, mercadoPagoLink: e.target.value})} /></div>
-                                                <div><label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block">Boas-vindas</label><textarea className="w-full p-4 border rounded-2xl font-bold text-xs h-24 outline-none focus:ring-2 focus:ring-[#556b2f] resize-none" value={siteConfig.welcomeMessage} onChange={e => setSiteConfig({...siteConfig, welcomeMessage: e.target.value})} /></div>
-                                            </div>
+                                    <div className="bg-white p-8 rounded-[3rem] border fade-in space-y-6">
+                                        <h3 className="font-serif font-bold text-xl mb-4">Site</h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                                            <div><label className="text-[10px] font-bold uppercase text-gray-400 block mb-1">Título</label><input className="w-full p-4 border rounded-2xl" value={siteConfig.eventTitle} onChange={e => setSiteConfig({...siteConfig, eventTitle: e.target.value})} /></div>
+                                            <div><label className="text-[10px] font-bold uppercase text-gray-400 block mb-1">Data</label><input className="w-full p-4 border rounded-2xl" value={siteConfig.eventDate} onChange={e => setSiteConfig({...siteConfig, eventDate: e.target.value})} /></div>
+                                            <div><label className="text-[10px] font-bold uppercase text-gray-400 block mb-1">Local</label><input className="w-full p-4 border rounded-2xl" value={siteConfig.eventLocation} onChange={e => setSiteConfig({...siteConfig, eventLocation: e.target.value})} /></div>
+                                            <div><label className="text-[10px] font-bold uppercase text-gray-400 block mb-1">PIX</label><input className="w-full p-4 border rounded-2xl" value={siteConfig.pixKey} onChange={e => setSiteConfig({...siteConfig, pixKey: e.target.value})} /></div>
+                                            <div className="md:col-span-2"><label className="text-[10px] font-bold uppercase text-gray-400 block mb-1">Cartão (Link)</label><input className="w-full p-4 border rounded-2xl" value={siteConfig.mercadoPagoLink || ''} onChange={e => setSiteConfig({...siteConfig, mercadoPagoLink: e.target.value})} placeholder="Ex: mercadopago.com.br/link..." /></div>
                                         </div>
-                                        <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('site_config').doc('main').set(siteConfig); showMsg('Site configurado!'); }} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-xs shadow-xl transition-all ${THEME.primary} hover:opacity-90`}>Guardar Tudo</button>
+                                        <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('site_config').doc('main').set(siteConfig); showMsg('Site atualizado!'); }} className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-xs ${THEME.primary}`}>Salvar Site</button>
                                     </div>
                                 )}
 
                                 {adminTab === 'rsvp' && (
                                     <div className="bg-white p-8 rounded-[3rem] border fade-in">
-                                        <h2 className="text-2xl font-serif font-bold mb-6 text-[#2f3b1c]">Convidados</h2>
+                                        <h3 className="font-serif font-bold text-xl mb-6">Convidados</h3>
                                         <div className="divide-y">
                                             {rsvps.map(r => (
-                                                <div key={r.id} className="py-4 flex justify-between items-center group">
-                                                    <div><p className="font-bold text-[#2f3b1c]">{r.name}</p><p className="text-[10px] text-gray-400 font-bold">{r.phone}</p></div>
-                                                    <span className={`text-[10px] font-black px-4 py-1 rounded-full border ${r.status === 'confirmed' ? 'bg-green-50 text-green-700 border-green-100' : 'bg-red-50 text-red-500 border-red-100'}`}>{r.status === 'confirmed' ? '✓ CONFIRMADO' : '✕ NÃO VAI'}</span>
+                                                <div key={r.id} className="py-4 flex justify-between items-center">
+                                                    <div><p className="font-bold">{r.name}</p><p className="text-xs text-gray-400">{r.phone}</p></div>
+                                                    <div className="flex items-center gap-3">
+                                                        <span className={`px-4 py-1 rounded-full text-[10px] font-black uppercase border ${r.status === 'confirmed' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-500'}`}>{r.status === 'confirmed' ? 'Confirmado' : 'Ausente'}</span>
+                                                        <button onClick={async () => await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(r.id).delete()} className="p-2 text-red-300 hover:text-red-500"><Icons.Trash2 size={16}/></button>
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
@@ -734,37 +625,145 @@
                         </div>
                     )}
 
+                    {showPaymentModal && (
+                        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                            <div className="bg-white rounded-[3rem] max-w-sm w-full p-10 shadow-2xl text-center relative zoom-in">
+                                <button onClick={() => setShowPaymentModal(null)} className="absolute top-6 right-6 text-gray-300 hover:text-red-500"><Icons.X /></button>
+                                <Icons.Gift size={40} className="mx-auto text-[#556b2f] mb-4" />
+                                <h3 className="text-2xl font-bold mb-1 text-[#2f3b1c]">Oferecer Presente</h3>
+                                <p className="text-xs text-gray-400 mb-6 italic">"{showPaymentModal.name}"</p>
+                                <div className="space-y-3 mb-8 text-left">
+                                    <div className="p-4 bg-gray-50 rounded-2xl border text-[11px] font-mono break-all text-center">{siteConfig.pixKey || "Chave PIX não configurada"}</div>
+                                    <button onClick={() => { const el = document.createElement('textarea'); el.value = siteConfig.pixKey; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); showMsg('PIX copiado!'); }} className="w-full py-3 bg-gray-100 rounded-xl text-[10px] font-bold uppercase flex items-center justify-center gap-2"><Icons.Copy size={16}/> Copiar PIX</button>
+                                    <button onClick={handlePaymentLink} className="w-full py-3 bg-blue-50 text-blue-600 rounded-xl text-[10px] font-bold uppercase flex items-center justify-center gap-2 border border-blue-100 transition-all hover:bg-blue-100"><Icons.ExternalLink size={16}/> Link de Pagamento</button>
+                                </div>
+                                <button onClick={() => handleToggleGift(showPaymentModal)} disabled={isReserving} className={`w-full py-4 rounded-2xl text-white font-black uppercase text-[10px] shadow-lg flex items-center justify-center gap-2 ${isReserving ? 'bg-gray-400' : `${THEME.primary}`}`}>
+                                    {isReserving ? <Icons.Loader2 /> : <><Icons.QrCode size={18}/> CONFIRMAR RESERVA (R$ {showPaymentModal.price})</>}
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
+                    {expandedGift && (
+                        <div className="fixed inset-0 z-[150] bg-white overflow-y-auto p-6 md:p-12 fade-in">
+                            <button onClick={() => { setExpandedGift(null); setExpandedImgIndex(0); }} className="fixed top-8 right-8 z-[160] bg-gray-100 p-3 rounded-full hover:bg-gray-200 transition-colors"><Icons.X /></button>
+                            
+                            <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-12 items-center lg:items-start py-10">
+                                <div className="w-full lg:w-3/5 space-y-4">
+                                    <div className="relative group">
+                                        <img 
+                                            src={(expandedGift.images && expandedGift.images.length > 0) ? expandedGift.images[expandedImgIndex] : expandedGift.image || 'https://placehold.co/600'} 
+                                            className="w-full aspect-square md:aspect-video object-cover rounded-[2rem] md:rounded-[3rem] shadow-2xl border bg-gray-50 transition-all" 
+                                        />
+                                        
+                                        {expandedGift.images?.length > 1 && (
+                                            <>
+                                                <button 
+                                                    onClick={() => setExpandedImgIndex(prev => prev === 0 ? expandedGift.images.length - 1 : prev - 1)}
+                                                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                                                >
+                                                    <Icons.ChevronLeft />
+                                                </button>
+                                                <button 
+                                                    onClick={() => setExpandedImgIndex(prev => prev === expandedGift.images.length - 1 ? 0 : prev + 1)}
+                                                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                                                >
+                                                    <Icons.ChevronRight />
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
+
+                                    {expandedGift.images?.length > 1 && (
+                                        <div className="flex gap-3 overflow-x-auto pb-4 no-scrollbar">
+                                            {expandedGift.images.map((img, i) => (
+                                                <img 
+                                                    key={i} 
+                                                    src={img} 
+                                                    onClick={() => setExpandedImgIndex(i)} 
+                                                    className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl object-cover cursor-pointer border-4 transition-all flex-shrink-0 ${i === expandedImgIndex ? 'border-[#556b2f] scale-105 shadow-md' : 'border-white opacity-60 hover:opacity-100'}`} 
+                                                />
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="w-full lg:w-2/5 flex flex-col text-center lg:text-left pt-4">
+                                    <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#2f3b1c] mb-6 leading-tight">{expandedGift.name}</h2>
+                                    {expandedGift.price && (
+                                        <div className="mb-10 inline-block px-8 py-4 bg-[#556b2f]/10 text-[#556b2f] rounded-[1.5rem] font-black text-3xl md:text-4xl border border-[#556b2f]/20 mx-auto lg:mx-0 shadow-sm">
+                                            R$ {expandedGift.price}
+                                        </div>
+                                    )}
+                                    {!expandedGift.takenBy ? (
+                                        <button onClick={() => { setShowPaymentModal(expandedGift); setExpandedGift(null); }} className={`w-full py-6 rounded-[2rem] text-white text-xl font-black shadow-xl ${THEME.primary} flex items-center justify-center gap-3 active:scale-95 transition-transform hover:opacity-90`}>
+                                            <Icons.Heart fill="white" /> PRESENTEAR AGORA
+                                        </button>
+                                    ) : (
+                                        <div className="py-6 px-10 bg-gray-50 rounded-[2rem] text-gray-400 font-bold border border-gray-100 text-lg">
+                                            Este presente já foi reservado.
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {showAdminModal && (
                         <div className="fixed inset-0 z-[600] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                            <div className="bg-white p-10 rounded-[3rem] w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl relative zoom-in">
+                            <div className="bg-white p-8 md:p-10 rounded-[3rem] w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative zoom-in no-scrollbar">
                                 <button onClick={() => setShowAdminModal(false)} className="absolute top-8 right-8 text-gray-300 hover:text-red-500 transition-colors"><Icons.X /></button>
                                 <h3 className="text-2xl font-serif font-bold mb-8 text-[#2f3b1c]">Dados do Presente</h3>
                                 <form onSubmit={handleSaveGift} className="space-y-6">
-                                    <input className="w-full p-4 border rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" placeholder="Nome do Presente" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} required />
-                                    <div className="flex gap-4">
-                                        <input className="flex-1 p-4 border rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" placeholder="Preço (Ex: 150,00)" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} />
-                                        <select className="flex-1 p-4 border rounded-2xl font-bold outline-none bg-white cursor-pointer" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>{dynamicCategories.map(c => <option key={c} value={c}>{c}</option>)}</select>
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Informações Principais</label>
+                                        <input className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#556b2f] transition-all" placeholder="Nome do Presente" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} required />
+                                        <input className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold outline-none focus:ring-2 focus:ring-[#556b2f] transition-all" placeholder="Preço (Ex: 150,00)" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} />
                                     </div>
-                                    <div>
-                                        <label className="text-[10px] font-bold text-gray-400 uppercase mb-2 block tracking-widest">Fotos (Upload)</label>
-                                        <p className="text-[9px] text-gray-400 mb-2 italic">Dica: Pode usar fotos de até **3MB**. O sistema irá otimizá-las automaticamente.</p>
-                                        <div onClick={() => !isSaving && fileInputRef.current.click()} className="w-full py-8 border-4 border-dashed border-gray-100 rounded-[2rem] flex flex-col items-center justify-center text-gray-300 hover:text-[#556b2f] hover:border-[#556b2f] cursor-pointer group">
-                                            <Icons.Upload size={32} className="mb-2 group-hover:scale-110 transition-transform" />
-                                            <span className="text-xs font-black uppercase tracking-widest">Selecionar Imagens</span>
-                                            <input type="file" ref={fileInputRef} multiple accept="image/*" className="hidden" onChange={handleFileUpload} />
-                                        </div>
-                                        <div className="grid grid-cols-4 gap-2 mt-4">
-                                            {formData.images.map((img, i) => (
-                                                <div key={i} className="relative aspect-square rounded-xl overflow-hidden border">
-                                                    <img src={img} className="w-full h-full object-cover" />
-                                                    <button type="button" onClick={() => setFormData(p => ({...p, images: p.images.filter((_, idx) => idx !== i)}))} className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"><Icons.X size={10} /></button>
-                                                </div>
-                                            ))}
+                                    
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Imagens do Item</label>
+                                        
+                                        {formData.images && formData.images.length > 0 && (
+                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                                                {formData.images.map((img, idx) => (
+                                                    <div key={idx} className="relative aspect-square rounded-2xl overflow-hidden border shadow-sm group">
+                                                        <img src={img} className="w-full h-full object-cover" />
+                                                        <button 
+                                                            type="button" 
+                                                            onClick={() => setFormData(prev => ({...prev, images: prev.images.filter((_, i) => i !== idx)}))}
+                                                            className="absolute top-1 right-1 bg-red-500 text-white p-1.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                                                        >
+                                                            <Icons.X size={12} />
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        <div 
+                                            onClick={() => !isImageProcessing && fileInputRef.current.click()} 
+                                            className={`w-full py-8 border-4 border-dashed rounded-[2rem] flex flex-col items-center justify-center transition-all group ${isImageProcessing ? 'bg-gray-50 border-gray-200 cursor-wait' : 'border-gray-100 text-gray-300 cursor-pointer hover:border-[#556b2f] hover:text-[#556b2f]'}`}
+                                        >
+                                            {isImageProcessing ? (
+                                                <Icons.Loader2 size={32} className="mb-2" />
+                                            ) : (
+                                                <Icons.Upload size={32} className="mb-2 group-hover:scale-110 transition-transform" />
+                                            )}
+                                            <span className="text-[10px] font-black uppercase">
+                                                {isImageProcessing ? "A processar..." : "+ Adicionar Outra Foto"}
+                                            </span>
+                                            <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileUpload} />
                                         </div>
                                     </div>
-                                    <button type="submit" disabled={isSaving} className={`w-full py-4 rounded-2xl text-white font-black uppercase tracking-widest text-[10px] shadow-lg flex items-center justify-center gap-2 ${isSaving ? 'bg-gray-400 cursor-not-allowed' : THEME.primary}`}>
-                                        {isSaving ? <Icons.Loader2 size={16}/> : null}
-                                        {isSaving ? 'A GUARDAR NO FIREBASE...' : 'GUARDAR E PUBLICAR'}
+
+                                    <button 
+                                        type="submit" 
+                                        disabled={isSaving || isImageProcessing} 
+                                        className={`w-full py-5 rounded-[1.5rem] text-white font-black uppercase text-[11px] tracking-widest flex items-center justify-center gap-2 shadow-lg transition-all ${isSaving || isImageProcessing ? 'bg-gray-400 cursor-not-allowed' : `${THEME.primary} hover:opacity-90 active:scale-[0.98]`}`}
+                                    >
+                                        {(isSaving || isImageProcessing) && <Icons.Loader2 size={16}/>} 
+                                        {isSaving ? "A GUARDAR..." : "SALVAR NO FIREBASE"}
                                     </button>
                                 </form>
                             </div>
@@ -772,25 +771,49 @@
                     )}
 
                     {viewMode === 'admin-login' && (
-                        <div className="fixed inset-0 bg-[#f4f5f0] z-[400] flex items-center justify-center p-4">
-                            <div className="max-w-sm w-full text-center bg-white p-12 rounded-[3rem] shadow-2xl border zoom-in">
-                                <h2 className="text-2xl font-serif font-bold mb-8">Acesso Restrito</h2>
-                                <input type="password" id="admin-p" placeholder="Palavra-passe" className="w-full p-5 border rounded-3xl text-center mb-6 font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" onKeyDown={(e) => e.key === 'Enter' && (e.target.value === ADMIN_PASSWORD ? setViewMode('admin-panel') : showMsg('Palavra-passe incorreta', 'error'))} />
-                                <button onClick={() => document.getElementById('admin-p').value === ADMIN_PASSWORD ? setViewMode('admin-panel') : showMsg('Palavra-passe incorreta', 'error')} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest text-[10px] shadow-xl ${THEME.primary}`}>Entrar</button>
-                                <button onClick={() => setViewMode('guest')} className="mt-6 text-gray-400 text-[10px] font-bold uppercase tracking-widest hover:text-[#556b2f]">Voltar</button>
+                        <div className="fixed inset-0 bg-[#f4f5f0] z-[600] flex items-center justify-center p-4">
+                            <div className="max-w-sm w-full text-center bg-white p-12 rounded-[3rem] shadow-2xl zoom-in">
+                                <h2 className="text-2xl font-serif font-bold mb-8">Acesso Administrativo</h2>
+                                <input type="password" placeholder="Palavra-passe" className="w-full p-5 border rounded-3xl text-center mb-6 font-bold outline-none focus:ring-2 focus:ring-[#556b2f]" value={adminPasswordInput} onChange={e => setAdminPasswordInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (adminPasswordInput === ADMIN_PASSWORD ? setViewMode('admin-panel') : showMsg('Senha incorreta', 'error'))} />
+                                <button onClick={() => adminPasswordInput === ADMIN_PASSWORD ? setViewMode('admin-panel') : showMsg('Senha incorreta', 'error')} className={`w-full py-5 rounded-3xl text-white font-black uppercase tracking-widest shadow-lg ${THEME.primary}`}>Entrar</button>
+                                <button onClick={() => setViewMode('guest')} className="mt-6 text-gray-400 text-xs font-bold uppercase hover:text-gray-600 transition-colors">Voltar</button>
                             </div>
                         </div>
                     )}
 
                     {showRsvpModal && (
                         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                            <div className="bg-white p-10 rounded-[3rem] w-full max-sm shadow-2xl text-center relative zoom-in">
+                            <div className="bg-white p-10 rounded-[3rem] w-full max-sm shadow-2xl text-center relative zoom-in border border-gray-100">
                                 <button onClick={() => setShowRsvpModal(false)} className="absolute top-6 right-6 text-gray-300 hover:text-red-500 transition-colors"><Icons.X /></button>
                                 <h3 className="text-2xl font-bold mb-4">Confirmar Presença</h3>
-                                <p className="text-gray-400 text-sm mb-8">Virá celebrar connosco?</p>
+                                <p className="text-gray-400 text-sm mb-8">Poderemos contar com você?</p>
                                 <div className="space-y-3">
-                                    <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'confirmed', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); showMsg("Presença confirmada!"); }} className="w-full p-4 bg-green-50 text-green-700 rounded-2xl font-black border-2 border-green-100 uppercase tracking-widest text-xs">Sim, estarei lá! <Icons.CheckCircle className="inline ml-2" size={16}/></button>
-                                    <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'declined', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); showMsg("Presença cancelada."); }} className="w-full p-4 bg-gray-50 text-gray-400 rounded-2xl font-black border uppercase tracking-widest text-xs">Infelizmente não</button>
+                                    <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'confirmed', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); showMsg("Presença confirmada!"); }} className="w-full p-4 bg-green-50 text-green-700 rounded-2xl font-black border uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 hover:bg-green-100 transition-colors">Confirmar <Icons.CheckCircle size={16}/></button>
+                                    <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('rsvp_list').doc(user.uid).set({ name: guestName, phone: guestPhone, status: 'declined', userId: user.uid, date: new Date().toISOString() }); setShowRsvpModal(false); showMsg("Sentiremos sua falta."); }} className="w-full p-4 bg-gray-50 text-gray-400 rounded-2xl font-black border uppercase tracking-widest text-[10px] hover:bg-gray-100 transition-colors">Não poderei ir</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {confirmDeleteId && (
+                        <div className="fixed inset-0 z-[700] bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
+                            <div className="bg-white p-8 rounded-3xl text-center max-w-xs shadow-2xl border border-gray-100">
+                                <p className="font-bold mb-6 text-[#2f3b1c]">Excluir permanentemente este presente?</p>
+                                <div className="flex gap-4">
+                                    <button onClick={() => { handleDeleteItem(confirmDeleteId); setConfirmDeleteId(null); }} className="flex-1 bg-red-600 text-white py-3 rounded-xl font-bold hover:bg-red-700 transition-colors">Excluir</button>
+                                    <button onClick={() => setConfirmDeleteId(null)} className="flex-1 bg-gray-100 text-gray-400 py-3 rounded-xl font-bold hover:bg-gray-200 transition-colors">Voltar</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {confirmReleaseId && (
+                        <div className="fixed inset-0 z-[700] bg-black/60 flex items-center justify-center p-4 backdrop-blur-sm">
+                            <div className="bg-white p-8 rounded-3xl text-center max-w-xs shadow-2xl border border-gray-100">
+                                <p className="font-bold mb-6 text-[#2f3b1c]">Liberar este presente para outros convidados?</p>
+                                <div className="flex gap-4">
+                                    <button onClick={async () => { await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('gift_list_items').doc(confirmReleaseId).update({ takenBy: null, takenById: null, paymentStatus: 'não pago' }); setConfirmReleaseId(null); showMsg("Reserva liberada!"); }} className="flex-1 bg-[#556b2f] text-white py-3 rounded-xl font-bold hover:opacity-90 transition-opacity">Confirmar</button>
+                                    <button onClick={() => setConfirmReleaseId(null)} className="flex-1 bg-gray-100 text-gray-400 py-3 rounded-xl font-bold hover:bg-gray-200 transition-colors">Cancelar</button>
                                 </div>
                             </div>
                         </div>
